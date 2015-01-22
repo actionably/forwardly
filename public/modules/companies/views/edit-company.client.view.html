@@ -12,6 +12,24 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label" for="description">Description</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="company.description" id="name" class="form-control" placeholder="Description" required>
+                    </div>
+                </div>         
+                <div class="form-group">
+                    <label class="control-label" for="url">Url</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="company.url" id="name" class="form-control" placeholder="Url" required>
+                    </div>
+                </div>       
+                <div class="form-group">
+                    <label class="control-label" for="imageUrl">Image Url</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="company.imageUrl" id="name" class="form-control" placeholder="Image Url" required>
+                    </div>
+                </div>                                         
+                <div class="form-group">
                     <input type="submit" value="Update" class="btn btn-default">
                 </div>
 				<div data-ng-show="error" class="text-danger">
