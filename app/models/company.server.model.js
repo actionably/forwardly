@@ -16,13 +16,27 @@ var CompanySchema = new Schema({
 		required: 'Please fill Company name',
 		trim: true
 	},
+	description: {
+		type: String,
+		default: '',
+		required: 'Please fill Company description',
+		trim: true
+	},
+	url: {
+		type: String,
+		default: '',
+		required: 'Please fill Company url',
+		trim: true
+	},
+	imageUrl: {
+		type: String,
+		default: '',
+		required: 'Please fill Company imageUrl',
+		trim: true
+	},
 	created: {
 		type: Date,
 		default: Date.now
-	},
-	user: {
-		type: Schema.ObjectId,
-		ref: 'User'
 	}
 });
 
