@@ -1,8 +1,11 @@
 <section data-ng-controller="CompaniesController" data-ng-init="findOne()">
 	<div class="page-header">
 		<h1 data-ng-bind="company.name"></h1>
+		<p data-ng-bind="company.url"></p>
+		<img src="{{company.imageUrl}}" />
+		<p data-ng-bind="company.description"><p>
 	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == company.user._id">
+	<div class="pull-right">
 		<a class="btn btn-primary" href="/#!/companies/{{company._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>

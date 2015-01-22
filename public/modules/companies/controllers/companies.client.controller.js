@@ -9,7 +9,10 @@ angular.module('companies').controller('CompaniesController', ['$scope', '$state
 		$scope.create = function() {
 			// Create new Company object
 			var company = new Companies ({
-				name: this.name
+				name: this.name,
+				description: this.description,
+				url: this.url,
+				imageUrl: this.imageUrl
 			});
 
 			// Redirect after save
