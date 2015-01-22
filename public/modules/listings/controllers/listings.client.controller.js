@@ -9,7 +9,12 @@ angular.module('listings').controller('ListingsController', ['$scope', '$statePa
 		$scope.create = function() {
 			// Create new Listing object
 			var listing = new Listings ({
-				name: this.name
+				name: this.name,
+				description: this.description,
+				location: this.location,
+				role: this.role,
+				tags: this.tags,
+				referralFee: this.referralFee
 			});
 
 			// Redirect after save

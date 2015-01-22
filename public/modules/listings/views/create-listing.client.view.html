@@ -2,15 +2,46 @@
     <div class="page-header">
         <h1>New Listing</h1>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12">    
         <form class="form-horizontal" data-ng-submit="create()" novalidate>
             <fieldset>
                 <div class="form-group">
-                    <label class="control-label" for="name">Name</label>
+                    <label class="control-label" for="headline">Headline</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name" required>
+                        <input type="text" data-ng-model="headline" id="headline" class="form-control" placeholder="Headline" required>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label" for="description">Description</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="description" id="description" class="form-control" placeholder="Description" required>
+                    </div>
+                </div>     
+                <div class="form-group">
+                    <label class="control-label" for="location">Location</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="location" id="location" class="form-control" placeholder="Location" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="role">Role</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="role" id="role" class="form-control" placeholder="Role" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="tags">Tags</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="tags" id="tags" class="form-control" placeholder="Tags">
+                    </div>
+                </div>     
+                <div class="form-group">
+                    <label class="control-label" for="referralFee">Referral Fee (USD)</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">$</div>
+                        <input type="text" data-ng-model="referralFee" id="referralFee" class="form-control" placeholder="Referral Fee" required>
+                    </div>
+                </div>                                              
                 <div class="form-group">
                     <input type="submit" class="btn btn-default">
                 </div>
