@@ -9,7 +9,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$statePa
 		$scope.create = function() {
 			// Create new Listing object
 			var listing = new Listings ({
-				name: this.name,
+				headline: this.headline,
 				description: this.description,
 				location: this.location,
 				role: this.role,
