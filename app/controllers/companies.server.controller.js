@@ -71,7 +71,7 @@ exports.delete = function(req, res) {
 /**
  * List of Companies
  */
-exports.list = function(req, res) { Company.find().sort('-created').populate('user', 'displayName').exec(function(err, companies) {
+exports.list = function(req, res) { Company.find().sort('-created').exec(function(err, companies) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -85,7 +85,7 @@ exports.list = function(req, res) { Company.find().sort('-created').populate('us
 /**
  * Company middleware
  */
-exports.companyByID = function(req, res, next, id) { Company.findById(id).populate('user', 'displayName').exec(function(err, company) {
+exports.companyByID = function(req, res, next, id) { Company.findById(id).exec(function(err, company) {
 		if (err) return next(err);
 		if (! company) return next(new Error('Failed to load Company ' + id));
 		req.company = company ;
