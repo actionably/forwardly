@@ -1,6 +1,18 @@
 <section data-ng-controller="ListingsController" data-ng-init="findOne()">
 	<div class="page-header">
-		<h1 data-ng-bind="listing.name"></h1>
+		<h1 data-ng-bind="listing.headline"></h1>
+		<h2 data-ng-bind="listing.company"></h2>
+		<p>
+			Role: {{ listing.role }}<br />
+			Location {{ listing.location }}</br>
+			Fee: ${{ listing.referralFee }}
+		<p>
+
+		<h3>Description</h3>
+		<p data-ng-bind="listing.description"></p>
+
+		<h3>Tags</h3>
+		<p data-ng-bind="listing.tags"></p>
 	</div>
 	<div class="pull-right" data-ng-show="authentication.user._id == listing.user._id">
 		<a class="btn btn-primary" href="/#!/listings/{{listing._id}}/edit">

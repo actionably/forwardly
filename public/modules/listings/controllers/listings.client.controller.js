@@ -1,14 +1,16 @@
 'use strict';
 
 // Listings controller
-angular.module('listings').controller('ListingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Listings',
-	function($scope, $stateParams, $location, Authentication, Listings ) {
+angular.module('listings').controller('ListingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Listings', 'Companies',
+	function($scope, $stateParams, $location, Authentication, Listings, Companies ) {
 		$scope.authentication = Authentication;
 
 		// Create new Listing
 		$scope.create = function() {
 			// Create new Listing object
+			console.log(this);
 			var listing = new Listings ({
+				company: this.company,
 				headline: this.headline,
 				description: this.description,
 				location: this.location,
@@ -66,5 +68,30 @@ angular.module('listings').controller('ListingsController', ['$scope', '$statePa
 				listingId: $stateParams.listingId
 			});
 		};
+
+		// the list of roles
+		$scope.roles = [
+			{name: 'Software Engineer'},
+			{name: 'Backend Developer'},
+			{name: 'Data Scientist'}, 
+			{name: 'DevOps'}, 
+			{name: 'Frontend Developer'}, 
+			{name: 'Full-Stack Developer'}, 
+			{name: 'Mobile Developer'}, 
+			{name: 'Attorney'}, 
+			{name: 'UI/UX Designer'}, 
+			{name: 'Finance/Accounting'}, 
+			{name: 'Hardware Engineer'}, 
+			{name: 'H.R.'}, 
+			{name: 'Marketing'}, 
+			{name: 'Office Manager'}, 
+			{name: 'Operations'}, 
+			{name: 'Product Manager'}, 
+			{name: 'Sales' }
+		];
+
+		// the list of companies
+		$scope.companies = Companies.query();	
+		
 	}
 ]);

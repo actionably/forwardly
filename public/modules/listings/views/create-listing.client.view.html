@@ -6,6 +6,11 @@
         <form class="form-horizontal" data-ng-submit="create()" novalidate>
             <fieldset>
                 <div class="form-group">
+                    <label class="control-label" for="company">Company</label>
+                    <select id="company" class="form-control" data-ng-model="company" ng-options="company._id as company.name for company in companies">
+                    </select>                  
+                </div>                
+                <div class="form-group">
                     <label class="control-label" for="headline">Headline</label>
                     <div class="controls">
                         <input type="text" data-ng-model="headline" id="headline" class="form-control" placeholder="Headline" required>
@@ -26,7 +31,8 @@
                 <div class="form-group">
                     <label class="control-label" for="role">Role</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="role" id="role" class="form-control" placeholder="Role" required>
+                        <select data-ng-model="role" id="role" class="form-control" required ng-options="role.name as role.name for role in roles" >
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
