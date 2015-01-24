@@ -4,98 +4,58 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	errorHandler = require('./errors'),
 	Company = mongoose.model('Company'),
 	_ = require('lodash');
 
 /**
  * Create a Company
  */
-exports.create = function(req, res) {
+exports.create = function (req) {
 	var company = new Company(req.body);
-
-	company.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(company);
-		}
-	});
+	return company.savePromise();
 };
 
 /**
  * Show the current Company
  */
-exports.read = function(req, res) {
-	res.jsonp(req.company);
+exports.read = function (req) {
+	return req.company;
 };
 
 /**
  * Update a Company
  */
-exports.update = function(req, res) {
-	var company = req.company ;
-
-	company = _.extend(company , req.body);
-
-	company.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(company);
-		}
-	});
+exports.update = function (req) {
+	var company = req.company;
+	company = _.extend(company, req.body);
+	return company.savePromise();
 };
 
 /**
  * Delete an Company
  */
-exports.delete = function(req, res) {
-	var company = req.company ;
-
-	company.remove(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(company);
-		}
-	});
+exports.delete = function (req) {
+	var company = req.company;
+	return company.removePromise();
 };
 
 /**
  * List of Companies
  */
-exports.list = function(req, res) { Company.find().sort('-created').exec(function(err, companies) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(companies);
-		}
-	});
+exports.list = function (req) {
+	return Company.find().sort('-created').exec();
 };
 
 /**
  * Company middleware
  */
-exports.companyByID = function(req, res, next, id) { Company.findById(id).exec(function(err, company) {
-		if (err) return next(err);
-		if (! company) return next(new Error('Failed to load Company ' + id));
-		req.company = company ;
-		next();
-	});
+exports.companyByID = function (req, id) {
+	return Company.findById(id).exec();
 };
 
 /**
  * Company authorization middleware
  */
-exports.hasAuthorization = function(req, res, next) {
+exports.hasAuthorization = function (req, res, next) {
 	next();
 };

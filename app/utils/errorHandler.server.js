@@ -33,10 +33,16 @@ exports.getErrorMessage = function(err) {
 				message = 'Something went wrong';
 		}
 	} else {
-		for (var errName in err.errors) {
-			if (err.errors[errName].message) message = err.errors[errName].message;
-		}
-	}
+        for (var errName in err.errors) {
+            if (err.errors[errName].message) {
+                if (message) {
+                    message += ', '+err.errors[errName].message;
+                } else {
+                    message = err.errors[errName].message;
+                }
+            }
+        }
+    }
 
 	return message;
 };

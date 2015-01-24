@@ -21,10 +21,20 @@ var ReferralSchema = new Schema({
 	},
 	email: {
 		type: String,
-		default: '',
-		required: 'Please fill Referral email',
-		trim: true
+        trim: true,
+        default: '',
+        match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
+    firstName : {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    lastName : {
+        type: String,
+        trim: true,
+        default: ''
+    },
 	open: {
 		type: Number
 	},

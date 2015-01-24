@@ -18,7 +18,38 @@ var express = require('express'),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
+    errorHandler = require('../app/utils/errorHandler'),
+    Q = require('q'),
+    mongoose = require('mongoose'),
 	path = require('path');
+
+/*
+ * Hack until mongoose 3.10 comes out. See this: https://github.com/LearnBoost/mongoose/issues/1431
+ */
+mongoose.Document.prototype.savePromise = function () {
+    var that = this;
+    return Q.Promise(function(resolve, reject) {
+        that.save(function (err, item, numberAffected) {
+            if (err) {
+                reject(err);
+            }
+            resolve(item, numberAffected);
+        });
+    });
+};
+
+mongoose.Document.prototype.removePromise = function () {
+    var that = this;
+    return Q.Promise(function(resolve, reject) {
+        that.remove(function (err, item) {
+            if (err) {
+                reject(err);
+            }
+            resolve(item);
+        });
+    });
+};
+
 
 module.exports = function(db) {
 	// Initialize express app
@@ -114,7 +145,7 @@ module.exports = function(db) {
 	app.use(express.static(path.resolve('./public')));
 
 	// Globbing routing files
-	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
+	config.getGlobbedFiles('./app/routes/**/*.routes.js').forEach(function(routePath) {
 		require(path.resolve(routePath))(app);
 	});
 
@@ -124,11 +155,14 @@ module.exports = function(db) {
 		if (!err) return next();
 
 		// Log it
-		console.error(err.stack);
+        console.error(err);
+        console.error(err.stack);
 
 		// Error page
-		res.status(500).render('500', {
-			error: err.stack
+		res.status(500).send({
+            error: err,
+            stack: err.stack,
+            message: errorHandler.getErrorMessage(err)
 		});
 	});
 
