@@ -9,13 +9,13 @@ var mongoose = require('mongoose'),
 /**
  * Listing Schema
  */
-var ReferralSchema = new Schema({
+var SubmissionSchema = new Schema({
 	listing: {
 		type: Schema.ObjectId,
-		required: 'Please fill Referral listing',
+		required: 'Please fill Submission listing',
 		ref: 'Listing'
 	},
-	parentReferral: {
+	referral: {
 		type: Schema.ObjectId,
 		ref: 'Referral'
 	},
@@ -33,23 +33,10 @@ var ReferralSchema = new Schema({
 		type: String,
 		trim: true
 	},
-	open: {
-		type: Number,
-		default: 0
+	linkedInUrl: {
+		type: String
 	},
-	clicks: {
-		type: Number,
-		default: 0
-	},
-	referrals: {
-		type: Number,
-		default: 0
-	},
-	submissions: {
-		type: Number,
-		default: 0
-	},
-	customMessage: {
+	uploadedResumeId: {
 		type: String
 	},
 	created: {
@@ -58,4 +45,4 @@ var ReferralSchema = new Schema({
 	}
 });
 
-mongoose.model('Referral', ReferralSchema);
+mongoose.model('Submission', SubmissionSchema);
