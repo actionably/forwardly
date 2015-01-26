@@ -6,6 +6,10 @@ module.exports = {
 		description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
 		keywords: 'MongoDB, Express, AngularJS, Node.js'
 	},
+	amazonAWS: {
+		clientID: process.env.AMAZONAWS_ID || 'APP_ID',
+		clientSecret: process.env.AMAZONAWS_SECRET || 'APP_SECRET'
+	},
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
 	sessionSecret: 'MEAN',

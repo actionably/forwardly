@@ -18,45 +18,49 @@ var express = require('express'),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
-    errorHandler = require('../app/utils/errorHandler'),
-    Q = require('q'),
-    mongoose = require('mongoose'),
+	errorHandler = require('../app/utils/errorHandler'),
+	Q = require('q'),
+	AWS = require('aws-sdk'),
+	mongoose = require('mongoose'),
 	path = require('path');
 
 /*
  * Hack until mongoose 3.10 comes out. See this: https://github.com/LearnBoost/mongoose/issues/1431
  */
 mongoose.Document.prototype.savePromise = function () {
-    var that = this;
-    return Q.Promise(function(resolve, reject) {
-        that.save(function (err, item, numberAffected) {
-            if (err) {
-                reject(err);
-            }
-            resolve(item, numberAffected);
-        });
-    });
+	var that = this;
+	return Q.Promise(function (resolve, reject) {
+		that.save(function (err, item, numberAffected) {
+			if (err) {
+				reject(err);
+			}
+			resolve(item, numberAffected);
+		});
+	});
 };
 
 mongoose.Document.prototype.removePromise = function () {
-    var that = this;
-    return Q.Promise(function(resolve, reject) {
-        that.remove(function (err, item) {
-            if (err) {
-                reject(err);
-            }
-            resolve(item);
-        });
-    });
+	var that = this;
+	return Q.Promise(function (resolve, reject) {
+		that.remove(function (err, item) {
+			if (err) {
+				reject(err);
+			}
+			resolve(item);
+		});
+	});
 };
 
 
-module.exports = function(db) {
+module.exports = function (db) {
+	// Initialize AWS
+	AWS.config.update({accessKeyId: config.amazonAWS.clientID, secretAccessKey: config.amazonAWS.clientSecret});
+
 	// Initialize express app
 	var app = express();
 
 	// Globbing model files
-	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
+	config.getGlobbedFiles('./app/models/**/*.js').forEach(function (modelPath) {
 		require(path.resolve(modelPath));
 	});
 
@@ -69,14 +73,14 @@ module.exports = function(db) {
 	app.locals.cssFiles = config.getCSSAssets();
 
 	// Passing the request url to environment locals
-	app.use(function(req, res, next) {
+	app.use(function (req, res, next) {
 		res.locals.url = req.protocol + '://' + req.headers.host + req.url;
 		next();
 	});
 
 	// Should be placed before express.static
 	app.use(compress({
-		filter: function(req, res) {
+		filter: function (req, res) {
 			return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
 		},
 		level: 9
@@ -145,29 +149,29 @@ module.exports = function(db) {
 	app.use(express.static(path.resolve('./public')));
 
 	// Globbing routing files
-	config.getGlobbedFiles('./app/routes/**/*.routes.js').forEach(function(routePath) {
+	config.getGlobbedFiles('./app/routes/**/*.routes.js').forEach(function (routePath) {
 		require(path.resolve(routePath))(app);
 	});
 
 	// Assume 'not found' in the error msgs is a 404. this is somewhat silly, but valid, you can do whatever you like, set properties, use instanceof etc.
-	app.use(function(err, req, res, next) {
+	app.use(function (err, req, res, next) {
 		// If the error object doesn't exists
 		if (!err) return next();
 
 		// Log it
-        console.error(err);
-        console.error(err.stack);
+		console.error(err);
+		console.error(err.stack);
 
 		// Error page
 		res.status(500).send({
-            error: err,
-            stack: err.stack,
-            message: errorHandler.getErrorMessage(err)
+			error: err,
+			stack: err.stack,
+			message: errorHandler.getErrorMessage(err)
 		});
 	});
 
 	// Assume 404 since no middleware responded
-	app.use(function(req, res) {
+	app.use(function (req, res) {
 		res.status(404).render('404', {
 			url: req.originalUrl,
 			error: 'Not Found'
