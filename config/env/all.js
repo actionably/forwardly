@@ -8,7 +8,8 @@ module.exports = {
 	},
 	amazonAWS: {
 		clientID: process.env.AMAZONAWS_ID || 'APP_ID',
-		clientSecret: process.env.AMAZONAWS_SECRET || 'APP_SECRET'
+		clientSecret: process.env.AMAZONAWS_SECRET || 'APP_SECRET',
+		s3Bucket: process.env.AMAZONAWS_S3_BUCKET || 'forwardly.dev.uploads'
 	},
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
@@ -29,7 +30,8 @@ module.exports = {
 				'public/lib/angular-sanitize/angular-sanitize.js', 
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js'
+				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
+				'public/lib/s3upload/s3upload.js'
 			]
 		},
 		css: [
