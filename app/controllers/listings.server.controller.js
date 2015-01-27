@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
 	Listing = mongoose.model('Listing'),
+	Referral = mongoose.model('Referral'),
 	_ = require('lodash');
 
 /**
@@ -16,11 +17,22 @@ exports.create = function (req) {
 	return Listing.create(listing);
 };
 
+function addReferrals(listing) {
+	return Referral.find({listing:listing}).sort('-created').exec().then(
+		function(referrals) {
+			var listing2 = listing.toObject();
+			listing2.referrals = referrals;
+			return listing2;
+		}
+	);
+}
+
 /**
  * Show the current Listing
  */
 exports.read = function (req) {
-	return req.listing;
+	var listing = req.listing;
+	return addReferrals(listing);
 };
 
 /**
@@ -29,7 +41,9 @@ exports.read = function (req) {
 exports.update = function (req) {
 	var listing = req.listing;
 	listing = _.extend(listing, req.body);
-	return listing.savePromise();
+	return listing.savePromise().then(function (listing) {
+		return addReferrals(listing);
+	});
 };
 
 /**
@@ -44,14 +58,14 @@ exports.delete = function (req) {
  * List of Listings
  */
 exports.list = function (req) {
-	return Listing.find().sort('-created').populate('user', 'displayName').exec();
+	return Listing.find().sort('-created').populate('user', 'displayName').populate('company').exec();
 };
 
 /**
  * Listing middleware
  */
 exports.listingByID = function (req, id) {
-	return Listing.findById(id).populate('user', 'displayName').exec();
+	return Listing.findById(id).populate('user', 'displayName').populate('company').exec();
 };
 
 /**
