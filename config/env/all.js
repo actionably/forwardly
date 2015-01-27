@@ -31,11 +31,17 @@ module.exports = {
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-				'public/lib/s3upload/s3upload.js'
+				'public/lib/s3upload/s3upload.js',
+				'public/lib/textAngular/dist/textAngular-rangy.min.js',
+				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
+				'public/lib/textAngular/dist/textAngular.min.js'
+
 			]
 		},
 		css: [
-			'public/modules/**/css/*.css'
+			'public/modules/**/css/*.css',
+			'public/lib/textAngular/src/textAngular.css',
+			'public/lib/font-awesome/css/font-awesome.min.css'
 		],
 		js: [
 			'public/config.js',
