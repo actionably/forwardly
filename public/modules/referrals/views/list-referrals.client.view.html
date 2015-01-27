@@ -1,0 +1,19 @@
+<section data-ng-controller="ReferralsController" data-ng-init="find()">
+    <div class="page-header">
+        <h1>Referrals</h1>
+    </div>
+    <div class="list-group">
+        <a data-ng-repeat="referral in referrals" data-ng-href="#!/referrals/{{referral._id}}" class="list-group-item">
+			<small class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="referral.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="referral.user.displayName"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="referral.name"></h4>
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!referrals.$resolved || referrals.length">
+    	No Referrals yet, why don't you <a href="/#!/referrals/create">create one</a>?
+    </div>
+</section>

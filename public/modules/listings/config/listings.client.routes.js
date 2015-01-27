@@ -20,6 +20,19 @@ angular.module('listings').config(['$stateProvider',
 		state('editListing', {
 			url: '/listings/:listingId/edit',
 			templateUrl: 'modules/listings/views/edit-listing.client.view.html'
-		});
+		}).
+        state('applyListing', {
+            url: '/listings/:listingId/apply',
+            templateUrl: 'modules/listings/views/apply-listing.client.view.html'
+        }).
+		state('viewListingReferral', {
+			url: '/listings/:listingId/referral/:referralId',
+			templateUrl: 'modules/listings/views/view-listing.client.view.html'
+		}).
+		state('applyListingReferral', {
+			url: '/listings/:listingId/apply/:referralId',
+			templateUrl: 'modules/listings/views/view-listing.client.view.html'
+		})		
+        ;
 	}
 ]);

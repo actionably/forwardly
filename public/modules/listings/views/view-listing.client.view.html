@@ -13,6 +13,17 @@
 
 		<h3>Tags</h3>
 		<p data-ng-bind="listing.tags"></p>
+
+		<p ng-if="referral._id">Parent Referral Id: <b>{{ referral._id }}</b></p>
+
+        <p>
+            <a href="/#!/referrals/create/{{listing._id}}{{ referral._id ? '/' + referral._id : '' }}">
+                <button class="btn btn-primary"><i class="glyphicon glyphicon-forward"></i> Refer Someone</button>
+            </a>
+            <a href="/#!/listings/{{listing._id}}/apply{{ referral._id ? '/' + referral._id : '' }}">
+                <button class="btn btn-success"><i class="glyphicon glyphicon-check"></i> Apply to this Job</button>
+            </a>
+        </p>
 	</div>
 	<div class="pull-right" data-ng-show="authentication.user._id == listing.user._id">
 		<a class="btn btn-primary" href="/#!/listings/{{listing._id}}/edit">

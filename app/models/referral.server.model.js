@@ -23,7 +23,8 @@ var ReferralSchema = new Schema({
 		type: String,
 		trim: true,
 		default: '',
-		match: [/.+\@.+\..+/, 'Please fill a valid email address']
+        required: 'Please enter an email address',
+        match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
 	firstName: {
 		type: String,

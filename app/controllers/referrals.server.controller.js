@@ -11,10 +11,8 @@ var mongoose = require('mongoose'),
  * Create a Referral
  */
 exports.create = function (req) {
-	var listing = req.listing;
-	var referral = new Referral(req.body);
-	referral.listing = listing;
-	return referral.savePromise();
+    var referral = new Referral(req.body);
+    return referral.savePromise();
 };
 
 /**
@@ -45,7 +43,7 @@ exports.delete = function (req) {
  * List of Referrals
  */
 exports.list = function (req) {
-	return Referral.find({listing:req.listing}).sort('-created').exec();
+	return Referral.find().sort('-created').exec();
 };
 
 /**

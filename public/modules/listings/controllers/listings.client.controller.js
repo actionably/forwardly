@@ -1,8 +1,8 @@
 'use strict';
 
 // Listings controller
-angular.module('listings').controller('ListingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Listings', 'Companies',
-	function($scope, $stateParams, $location, Authentication, Listings, Companies ) {
+angular.module('listings').controller('ListingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Listings', 'Companies', 'Referrals',
+	function($scope, $stateParams, $location, Authentication, Listings, Companies, Referrals ) {
 		$scope.authentication = Authentication;
 
 		// Create new Listing
@@ -67,6 +67,13 @@ angular.module('listings').controller('ListingsController', ['$scope', '$statePa
 			$scope.listing = Listings.get({ 
 				listingId: $stateParams.listingId
 			});
+			if ($stateParams.referralId) {
+				console.log('the referralId is', $stateParams.referralId);
+				$scope.referral = Referrals.get({
+					referralId: $stateParams.referralId
+				});
+			}
+
 		};
 
 		// the list of roles
