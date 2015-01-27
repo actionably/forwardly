@@ -68,7 +68,6 @@ angular.module('listings').controller('ListingsController', ['$scope', '$statePa
 				listingId: $stateParams.listingId
 			});
 			if ($stateParams.referralId) {
-				console.log('the referralId is', $stateParams.referralId);
 				$scope.referral = Referrals.get({
 					referralId: $stateParams.referralId
 				});
