@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'forwardly';
-	var applicationModuleVendorDependencies = ['ngResource', 'ngCookies',  'ngAnimate',  'ngTouch',  'ngSanitize',  'ui.router', 'ui.bootstrap', 'ui.utils'];
+	var applicationModuleVendorDependencies = ['ngResource', 'ngCookies',  'ngAnimate',  'ngTouch',  'ngSanitize',  'ui.router', 'ui.bootstrap', 'ui.utils', 'textAngular'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -43,12 +43,20 @@ angular.element(document).ready(function() {
 });
 'use strict';
 
-// Use Applicaion configuration module to register a new module
-ApplicationConfiguration.registerModule('articles');
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('companies');
 'use strict';
 
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('core');
+'use strict';
+
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('listings');
+'use strict';
+
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('referrals');
 'use strict';
 
 // Use Applicaion configuration module to register a new module
@@ -57,104 +65,113 @@ ApplicationConfiguration.registerModule('users');
 'use strict';
 
 // Configuring the Articles module
-angular.module('articles').run(['Menus',
+angular.module('companies').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
-		Menus.addMenuItem('topbar', 'Articles', 'articles', 'dropdown', '/articles(/create)?');
-		Menus.addSubMenuItem('topbar', 'articles', 'List Articles', 'articles');
-		Menus.addSubMenuItem('topbar', 'articles', 'New Article', 'articles/create');
+		Menus.addMenuItem('topbar', 'Companies', 'companies', 'dropdown', '/companies(/create)?');
+		Menus.addSubMenuItem('topbar', 'companies', 'List Companies', 'companies');
+		Menus.addSubMenuItem('topbar', 'companies', 'New Company', 'companies/create');
 	}
 ]);
 'use strict';
 
-// Setting up route
-angular.module('articles').config(['$stateProvider',
+//Setting up route
+angular.module('companies').config(['$stateProvider',
 	function($stateProvider) {
-		// Articles state routing
+		// Companies state routing
 		$stateProvider.
-		state('listArticles', {
-			url: '/articles',
-			templateUrl: 'modules/articles/views/list-articles.client.view.html'
+		state('listCompanies', {
+			url: '/companies',
+			templateUrl: 'modules/companies/views/list-companies.client.view.html'
 		}).
-		state('createArticle', {
-			url: '/articles/create',
-			templateUrl: 'modules/articles/views/create-article.client.view.html'
+		state('createCompany', {
+			url: '/companies/create',
+			templateUrl: 'modules/companies/views/create-company.client.view.html'
 		}).
-		state('viewArticle', {
-			url: '/articles/:articleId',
-			templateUrl: 'modules/articles/views/view-article.client.view.html'
+		state('viewCompany', {
+			url: '/companies/:companyId',
+			templateUrl: 'modules/companies/views/view-company.client.view.html'
 		}).
-		state('editArticle', {
-			url: '/articles/:articleId/edit',
-			templateUrl: 'modules/articles/views/edit-article.client.view.html'
+		state('editCompany', {
+			url: '/companies/:companyId/edit',
+			templateUrl: 'modules/companies/views/edit-company.client.view.html'
 		});
 	}
 ]);
 'use strict';
 
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
-	function($scope, $stateParams, $location, Authentication, Articles) {
+// Companies controller
+angular.module('companies').controller('CompaniesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Companies',
+	function($scope, $stateParams, $location, Authentication, Companies ) {
 		$scope.authentication = Authentication;
 
+		// Create new Company
 		$scope.create = function() {
-			var article = new Articles({
-				title: this.title,
-				content: this.content
+			// Create new Company object
+			var company = new Companies ({
+				name: this.name,
+				description: this.description,
+				url: this.url,
+				imageUrl: this.imageUrl
 			});
-			article.$save(function(response) {
-				$location.path('articles/' + response._id);
 
-				$scope.title = '';
-				$scope.content = '';
+			// Redirect after save
+			company.$save(function(response) {
+				$location.path('companies/' + response._id);
+
+				// Clear form fields
+				$scope.name = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
 		};
 
-		$scope.remove = function(article) {
-			if (article) {
-				article.$remove();
+		// Remove existing Company
+		$scope.remove = function( company ) {
+			if ( company ) { company.$remove();
 
-				for (var i in $scope.articles) {
-					if ($scope.articles[i] === article) {
-						$scope.articles.splice(i, 1);
+				for (var i in $scope.companies ) {
+					if ($scope.companies [i] === company ) {
+						$scope.companies.splice(i, 1);
 					}
 				}
 			} else {
-				$scope.article.$remove(function() {
-					$location.path('articles');
+				$scope.company.$remove(function() {
+					$location.path('companies');
 				});
 			}
 		};
 
+		// Update existing Company
 		$scope.update = function() {
-			var article = $scope.article;
+			var company = $scope.company ;
 
-			article.$update(function() {
-				$location.path('articles/' + article._id);
+			company.$update(function() {
+				$location.path('companies/' + company._id);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
 		};
 
+		// Find a list of Companies
 		$scope.find = function() {
-			$scope.articles = Articles.query();
+			$scope.companies = Companies.query();
 		};
 
+		// Find existing Company
 		$scope.findOne = function() {
-			$scope.article = Articles.get({
-				articleId: $stateParams.articleId
+			$scope.company = Companies.get({ 
+				companyId: $stateParams.companyId
 			});
 		};
 	}
 ]);
 'use strict';
 
-//Articles service used for communicating with the articles REST endpoints
-angular.module('articles').factory('Articles', ['$resource',
+//Companies service used to communicate Companies REST endpoints
+angular.module('companies').factory('Companies', ['$resource',
 	function($resource) {
-		return $resource('articles/:articleId', {
-			articleId: '@_id'
+		return $resource('companies/:companyId', { companyId: '@_id'
 		}, {
 			update: {
 				method: 'PUT'
@@ -196,15 +213,94 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 		});
 	}
 ]);
+/* globals S3Upload */
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication',
-	function($scope, Authentication) {
+angular.module('core').controller('HomeController', ['$scope', 'Authentication', 'Random',
+	function($scope, Authentication, Random) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
+		$scope.data = {
+			firstName : '',
+			lastName : ''
+		};
+		$scope.upload = {
+			progressing: false,
+			percent:0,
+			complete:false,
+			url:'',
+			error:false,
+			errorMessage:''
+		};
+		$scope.s3_upload = function(target) {
+			$scope.upload = {
+				progressing: false,
+				percent:0,
+				complete:false,
+				url:'',
+				error:false,
+				errorMessage:''
+			};
+			var namePrefix = $scope.data.firstName+$scope.data.lastName;
+			if (!namePrefix) {
+				namePrefix = 'Candidate';
+			}
+			if (!target.files[0] || !target.files[0].type) {
+				$scope.$apply(function() {
+					$scope.upload.error = true;
+					$scope.upload.errorMessage = 'Unable to read content type of resume';
+				});
+				return;
+			}
+			var type = target.files[0].type;
+			var suffix = '';
+			if (type === 'application/pdf') {
+				suffix = '.pdf';
+			} else if (type === 'application/msword') {
+				suffix = '.doc';
+			} else if (type === 'application/rtf') {
+				suffix = '.rtf';
+			} else if (type === 'text/plain') {
+				suffix = '.txt';
+			} else {
+				$scope.$apply(function() {
+					$scope.upload.error = true;
+					$scope.upload.errorMessage = 'Resume must be pdf, doc, rtf, or txt file';
+				});
+				return;
+			}
+			var name = Random.generateString(24)+'/'+namePrefix+'Resume'+suffix;
+			var s3upload = new S3Upload({
+				s3_object_name: name,
+				file_dom_selector: 'files',
+				s3_sign_put_url: '/sign_s3',
+				onProgress: function(percent, message) {
+					$scope.$apply(function() {
+						$scope.upload.progressing = true;
+						$scope.upload.percent = percent;
+					});
+				},
+				onFinishS3Put: function(public_url) {
+					$scope.$apply(function() {
+						$scope.upload.progressing = false;
+						$scope.upload.complete = true;
+						$scope.upload.url = public_url;
+					});
+				},
+				onError: function(status) {
+					$scope.$apply(function() {
+						$scope.upload.progressing = false;
+						$scope.upload.complete = false;
+						$scope.upload.error = true;
+						$scope.upload.errorMessage = status;
+					});
+				}
+			});
+		};
 	}
 ]);
+
 'use strict';
 
 //Menu service used for managing  menus
@@ -369,6 +465,307 @@ angular.module('core').service('Menus', [
 
 		//Adding the topbar menu
 		this.addMenu('topbar');
+	}
+]);
+'use strict';
+
+angular.module('core').service('Random', [
+	function() {
+		var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopqrstuvwxyz';
+		this.generateString = function(length) {
+			length = length ? length : 32;
+			var string = '';
+			for (var i = 0; i < length; i++) {
+				var randomNumber = Math.floor(Math.random() * chars.length);
+				string += chars.substring(randomNumber, randomNumber + 1);
+			}
+			return string;
+		};
+	}
+]);
+
+'use strict';
+
+// Configuring the Articles module
+angular.module('listings').run(['Menus',
+	function(Menus) {
+		// Set top bar menu items
+		Menus.addMenuItem('topbar', 'Listings', 'listings', 'dropdown', '/listings(/create)?');
+		Menus.addSubMenuItem('topbar', 'listings', 'List Listings', 'listings');
+		Menus.addSubMenuItem('topbar', 'listings', 'New Listing', 'listings/create');
+	}
+]);
+'use strict';
+
+//Setting up route
+angular.module('listings').config(['$stateProvider',
+	function($stateProvider) {
+		// Listings state routing
+		$stateProvider.
+		state('listListings', {
+			url: '/listings',
+			templateUrl: 'modules/listings/views/list-listings.client.view.html'
+		}).
+		state('createListing', {
+			url: '/listings/create',
+			templateUrl: 'modules/listings/views/create-listing.client.view.html'
+		}).
+		state('viewListing', {
+			url: '/listings/:listingId',
+			templateUrl: 'modules/listings/views/view-listing.client.view.html'
+		}).
+		state('editListing', {
+			url: '/listings/:listingId/edit',
+			templateUrl: 'modules/listings/views/edit-listing.client.view.html'
+		}).
+        state('applyListing', {
+            url: '/listings/:listingId/apply',
+            templateUrl: 'modules/listings/views/apply-listing.client.view.html'
+        }).
+		state('viewListingReferral', {
+			url: '/listings/:listingId/referrals/:referralId',
+			templateUrl: 'modules/listings/views/view-listing.client.view.html'
+		}).
+		state('applyListingReferral', {
+			url: '/listings/:listingId/apply/:referralId',
+			templateUrl: 'modules/listings/views/apply-listing.client.view.html'
+		})		
+        ;
+	}
+]);
+
+'use strict';
+
+// Listings controller
+angular.module('listings').controller('ListingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Listings', 'Companies', 'Referrals',
+	function($scope, $stateParams, $location, Authentication, Listings, Companies, Referrals ) {
+		$scope.authentication = Authentication;
+
+		// Create new Listing
+		$scope.create = function() {
+			// Create new Listing object
+			console.log(this);
+			var listing = new Listings ({
+				company: this.company,
+				headline: this.headline,
+				description: this.description,
+				location: this.location,
+				role: this.role,
+				tags: this.tags,
+				referralFee: this.referralFee
+			});
+
+			// Redirect after save
+			listing.$save(function(response) {
+				$location.path('listings/' + response._id);
+
+				// Clear form fields
+				$scope.name = '';
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		// Remove existing Listing
+		$scope.remove = function( listing ) {
+			if ( listing ) { listing.$remove();
+
+				for (var i in $scope.listings ) {
+					if ($scope.listings [i] === listing ) {
+						$scope.listings.splice(i, 1);
+					}
+				}
+			} else {
+				$scope.listing.$remove(function() {
+					$location.path('listings');
+				});
+			}
+		};
+
+		// Update existing Listing
+		$scope.update = function() {
+			var listing = $scope.listing ;
+
+			listing.$update(function() {
+				$location.path('listings/' + listing._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		// Find a list of Listings
+		$scope.find = function() {
+			$scope.listings = Listings.query();
+		};
+
+		// Find existing Listing
+		$scope.findOne = function() {
+			$scope.listing = Listings.get({ 
+				listingId: $stateParams.listingId
+			});
+			if ($stateParams.referralId) {
+				$scope.referral = Referrals.get({
+					referralId: $stateParams.referralId
+				});
+			}
+
+		};
+
+		// the list of roles
+		$scope.roles = [
+			{name: 'Software Engineer'},
+			{name: 'Backend Developer'},
+			{name: 'Data Scientist'}, 
+			{name: 'DevOps'}, 
+			{name: 'Frontend Developer'}, 
+			{name: 'Full-Stack Developer'}, 
+			{name: 'Mobile Developer'}, 
+			{name: 'Attorney'}, 
+			{name: 'UI/UX Designer'}, 
+			{name: 'Finance/Accounting'}, 
+			{name: 'Hardware Engineer'}, 
+			{name: 'H.R.'}, 
+			{name: 'Marketing'}, 
+			{name: 'Office Manager'}, 
+			{name: 'Operations'}, 
+			{name: 'Product Manager'}, 
+			{name: 'Sales' }
+		];
+
+		// the list of companies
+		$scope.companies = Companies.query();	
+		
+	}
+]);
+'use strict';
+
+//Listings service used to communicate Listings REST endpoints
+angular.module('listings').factory('Listings', ['$resource',
+	function($resource) {
+		return $resource('listings/:listingId', { listingId: '@_id'
+		}, {
+			update: {
+				method: 'PUT'
+			}
+		});
+	}
+]);
+'use strict';
+
+//Setting up route
+angular.module('referrals').config(['$stateProvider',
+	function($stateProvider) {
+		// Referrals state routing
+		$stateProvider.
+		state('listReferrals', {
+			url: '/referrals',
+			templateUrl: 'modules/referrals/views/list-referrals.client.view.html'
+		}).
+        state('createReferral', {
+            url: '/referrals/create/:listingId',
+            templateUrl: 'modules/referrals/views/create-referral.client.view.html'
+        }).
+		state('createReferral2', {
+			url: '/referrals/create/:listingId/:referralId',
+			templateUrl: 'modules/referrals/views/create-referral.client.view.html'
+		}).
+		state('viewReferral', {
+			url: '/referrals/:referralId',
+			templateUrl: 'modules/referrals/views/view-referral.client.view.html'
+		}).
+		state('editReferral', {
+			url: '/referrals/:referralId/edit',
+			templateUrl: 'modules/referrals/views/edit-referral.client.view.html'
+		});
+	}
+]);
+
+'use strict';
+
+// Referrals controller
+angular.module('referrals').controller('ReferralsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Referrals',
+	function($scope, $stateParams, $location, Authentication, Referrals ) {
+		$scope.authentication = Authentication;
+
+		// Create new Referral
+		$scope.create = function() {
+			// Create new Referral object
+			var referral = new Referrals ({
+				listing: $stateParams.listingId,
+                parentReferral: $stateParams.referralId,
+                email: this.email,
+                firstName: this.firstName,
+                lastName: this.lastName,
+                customMessage: this.customMessage
+			});
+
+			// Redirect after save
+			referral.$save(function(response) {
+				// with the response, we redirect back to the listing with the parent referral
+				console.log('Referral Created: ', response._id);
+				var destination = 'listings/' + response.listing;
+				destination += response.parentReferral ? '/referrals/' + response.parentReferral : '';
+				// TODO: Put a success flash message here
+				$location.path(destination);
+				// Clear form fields
+				$scope.name = '';
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		// Remove existing Referral
+		$scope.remove = function( referral ) {
+			if ( referral ) { referral.$remove();
+
+				for (var i in $scope.referrals ) {
+					if ($scope.referrals [i] === referral ) {
+						$scope.referrals.splice(i, 1);
+					}
+				}
+			} else {
+				$scope.referral.$remove(function() {
+					$location.path('referrals');
+				});
+			}
+		};
+
+		// Update existing Referral
+		$scope.update = function() {
+			var referral = $scope.referral ;
+
+			referral.$update(function() {
+				$location.path('referrals/' + referral._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		// Find a list of Referrals
+		$scope.find = function() {
+			$scope.referrals = Referrals.query();
+		};
+
+		// Find existing Referral
+		$scope.findOne = function() {
+			$scope.referral = Referrals.get({ 
+				referralId: $stateParams.referralId
+			});
+		};
+	}
+]);
+
+'use strict';
+
+//Referrals service used to communicate Referrals REST endpoints
+angular.module('referrals').factory('Referrals', ['$resource',
+	function($resource) {
+		return $resource('referrals/:referralId', { referralId: '@_id'
+		}, {
+			update: {
+				method: 'PUT'
+			}
+		});
 	}
 ]);
 'use strict';
