@@ -20,6 +20,7 @@ angular.module('referrals').controller('ReferralsController', ['$scope', '$state
 			// Redirect after save
 			referral.$save(function(response) {
 				// with the response, we redirect back to the listing with the parent referral
+				console.log('Referral Created: ', response._id);
 				var destination = 'listings/' + response.listing;
 				destination += response.parentReferral ? '/referral/' + response.parentReferral : '';
 				// TODO: Put a success flash message here
