@@ -26,7 +26,7 @@ angular.module('listings').config(['$stateProvider',
             templateUrl: 'modules/listings/views/apply-listing.client.view.html'
         }).
 		state('viewListingReferral', {
-			url: '/listings/:listingId/referral/:referralId',
+			url: '/listings/:listingId/referrals/:referralId',
 			templateUrl: 'modules/listings/views/view-listing.client.view.html'
 		}).
 		state('applyListingReferral', {
