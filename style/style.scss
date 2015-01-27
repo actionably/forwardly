@@ -1,0 +1,5 @@
+//$brand-primary: #967ADC;
+//$brand-success: #A0D468;
+$icon-font-path: '/lib/bootstrap/dist/fonts/';
+@import "../public/lib/bootstrap-sass-official/assets/stylesheets/bootstrap";
+.sample { background: $brand-success; }

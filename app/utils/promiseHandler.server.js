@@ -36,7 +36,7 @@
 				resolve(promise);
 			});
 			promise.then(function (data) {
-				console.log(JSON.stringify(data));
+				//console.log(JSON.stringify(data));
 				if (!data) {
 					next(new Error('Failed to load ' + key + ' for ' + id));
 				} else {
