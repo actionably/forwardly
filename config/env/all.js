@@ -39,9 +39,9 @@ module.exports = {
 			]
 		},
 		css: [
-			'public/modules/**/css/*.css',
 			'public/lib/textAngular/src/textAngular.css',
-			'public/lib/font-awesome/css/font-awesome.min.css'
+			'public/lib/font-awesome/css/font-awesome.min.css',
+			'public/modules/**/css/*.css'
 		],
 		js: [
 			'public/config.js',

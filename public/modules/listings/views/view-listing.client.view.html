@@ -1,7 +1,26 @@
 <section data-ng-controller="ListingsController" data-ng-init="findOne()">
 	<div class="page-header">
-		<h1 data-ng-bind="listing.headline"></h1>
-		<h2 data-ng-bind="listing.company"></h2>
+		<div class="row">
+			<div class="col-md-12">
+				<img width="140" alt="listing.company.name" class="pull-right img-rounded" ng-src="{{ listing.company.imageUrl }}" />
+				<h1 data-ng-bind="listing.headline"></h1>
+				<h2 data-ng-bind="listing.company.name"></h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+	        <p>
+	            <a href="/#!/referrals/create/{{listing._id}}{{ referral._id ? '/' + referral._id : '' }}">
+	                <button class="btn btn-primary"><i class="glyphicon glyphicon-forward"></i> Refer Someone</button>
+	            </a>
+	            <a href="/#!/listings/{{listing._id}}/apply{{ referral._id ? '/' + referral._id : '' }}">
+	                <button class="btn btn-success"><i class="glyphicon glyphicon-check"></i> Apply to this Job</button>
+	            </a>
+	        </p>	
+	    	</div>
+	    </div>		
+	</div>
+	<div>
 		<p>
 			Role: {{ listing.role }}<br />
 			Location {{ listing.location }}</br>
