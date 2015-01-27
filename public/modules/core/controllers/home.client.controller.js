@@ -27,12 +27,10 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 				error:false,
 				errorMessage:''
 			};
-			console.log('got here');
 			var namePrefix = $scope.data.firstName+$scope.data.lastName;
 			if (!namePrefix) {
 				namePrefix = 'Candidate';
 			}
-			console.log('got here2');
 			if (!target.files[0] || !target.files[0].type) {
 				$scope.$apply(function() {
 					$scope.upload.error = true;
@@ -40,7 +38,6 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 				});
 				return;
 			}
-			console.log('got here3');
 			var type = target.files[0].type;
 			var suffix = '';
 			if (type === 'application/pdf') {
@@ -59,7 +56,6 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 				return;
 			}
 			var name = Random.generateString(24)+'/'+namePrefix+'Resume'+suffix;
-			console.log('got here4 '+name);
 			var s3upload = new S3Upload({
 				s3_object_name: name,
 				file_dom_selector: 'files',
