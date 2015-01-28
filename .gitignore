@@ -8,3 +8,5 @@ app/tests/coverage/
 .bower-*/
 .idea/
 public/css/style.css
+
+public/css/style.css.map
