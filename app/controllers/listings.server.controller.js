@@ -58,7 +58,7 @@ exports.delete = function (req) {
  * List of Listings
  */
 exports.list = function (req) {
-	return Listing.find().sort('-created').populate('user', 'displayName').populate('company').exec();
+	return Listing.find(req.query).sort('-created').populate('user', 'displayName').populate('company').exec();
 };
 
 /**

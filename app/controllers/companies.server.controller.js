@@ -43,7 +43,7 @@ exports.delete = function (req) {
  * List of Companies
  */
 exports.list = function (req) {
-	return Company.find().sort('-created').exec();
+	return Company.find(req.query).sort('-created').exec();
 };
 
 /**
