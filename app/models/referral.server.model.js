@@ -59,4 +59,8 @@ var ReferralSchema = new Schema({
 	}
 });
 
+ReferralSchema.method('fullName', function() {
+	return this.firstName + ' ' + this.lastname;
+});
+
 mongoose.model('Referral', ReferralSchema);

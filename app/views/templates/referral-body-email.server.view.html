@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+</head>
+
+<body>
+	<p>Dear {{referral.firstName}},</p>
+	<p></p>
+	<p>{{referral.parentReferral.firstName}} {{referral.parentReferral.firstName}} thinks you would be interested in this
+		role or might know someone who is. If you refer someone for this job you can share in the
+		${{referral.listing.referralFee}} referral fee!</p>
+	<br/>
+	<p><h1>{{referral.listing.headline}}</h1></p>
+	<p>{{referral.listing.description|raw}}</p>
+	<button>Apply Now</button>
+	<button>Refer Someone</button>
+</body>
+
+</html>

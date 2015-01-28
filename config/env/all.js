@@ -11,6 +11,10 @@ module.exports = {
 		clientSecret: process.env.AMAZONAWS_SECRET || 'APP_SECRET',
 		s3Bucket: process.env.AMAZONAWS_S3_BUCKET || 'forwardly.dev.uploads'
 	},
+	mandrill: {
+		apiKey: process.env.MANDRILL_APIKEY || 'API_KEY',
+		username: process.env.MANDRILL_USERNAME || 'USERNAME'
+	},
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
 	sessionSecret: 'MEAN',

@@ -1,6 +1,7 @@
 'use strict';
 
 var aws = require('aws-sdk'),
+	config = require('../../config/config'),
 	Q = require('q');
 
 /**
@@ -14,7 +15,7 @@ exports.index = function(req, res) {
 
 exports.sign_s3 = function(req, locals) {
 	var s3 = new aws.S3({region: 'us-west-1'});
-	var bucketName = locals.config.amazonAWS.s3Bucket;
+	var bucketName = config.amazonAWS.s3Bucket;
 	console.log(bucketName);
 	var s3_params = {
 		Bucket: bucketName,
