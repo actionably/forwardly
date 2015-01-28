@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+	timestamps = require('mongoose-timestamp'),
+	deepPopulate = require('mongoose-deep-populate'),
 	Schema = mongoose.Schema;
 
 /**
@@ -51,11 +53,9 @@ var ListingSchema = new Schema({
 		type: Schema.ObjectId,
 		required: 'Please fill Listing company',
 		ref: 'Company'
-	},
-	created: {
-		type: Date,
-		default: Date.now
 	}
 });
 
+ListingSchema.plugin(deepPopulate);
+ListingSchema.plugin(timestamps);
 mongoose.model('Listing', ListingSchema);

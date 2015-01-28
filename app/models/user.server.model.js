@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+	deepPopulate = require('mongoose-deep-populate'),
 	Schema = mongoose.Schema,
 	crypto = require('crypto');
 
@@ -143,4 +144,5 @@ UserSchema.statics.findUniqueUsername = function(username, suffix, callback) {
 	});
 };
 
+UserSchema.plugin(deepPopulate);
 mongoose.model('User', UserSchema);

@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+	timestamps = require('mongoose-timestamp'),
+	deepPopulate = require('mongoose-deep-populate'),
 	Schema = mongoose.Schema;
 
 /**
@@ -33,11 +35,9 @@ var CompanySchema = new Schema({
 		default: '',
 		required: 'Please fill Company imageUrl',
 		trim: true
-	},
-	created: {
-		type: Date,
-		default: Date.now
 	}
 });
 
+CompanySchema.plugin(deepPopulate);
+CompanySchema.plugin(timestamps);
 mongoose.model('Company', CompanySchema);

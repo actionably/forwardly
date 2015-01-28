@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+	timestamps = require('mongoose-timestamp'),
+	deepPopulate = require('mongoose-deep-populate'),
 	Schema = mongoose.Schema;
 
 /**
@@ -52,10 +54,6 @@ var ReferralSchema = new Schema({
 	},
 	customMessage: {
 		type: String
-	},
-	created: {
-		type: Date,
-		default: Date.now
 	}
 });
 
@@ -63,4 +61,6 @@ ReferralSchema.method('fullName', function() {
 	return this.firstName + ' ' + this.lastname;
 });
 
+ReferralSchema.plugin(deepPopulate);
+ReferralSchema.plugin(timestamps);
 mongoose.model('Referral', ReferralSchema);

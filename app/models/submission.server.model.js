@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+	timestamps = require('mongoose-timestamp'),
+	deepPopulate = require('mongoose-deep-populate'),
 	Schema = mongoose.Schema;
 
 /**
@@ -38,11 +40,9 @@ var SubmissionSchema = new Schema({
 	},
 	uploadedResumeId: {
 		type: String
-	},
-	created: {
-		type: Date,
-		default: Date.now
 	}
 });
 
+SubmissionSchema.plugin(deepPopulate);
+SubmissionSchema.plugin(timestamps);
 mongoose.model('Submission', SubmissionSchema);
