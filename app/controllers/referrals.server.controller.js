@@ -15,14 +15,13 @@ var mongoose = require('mongoose'),
 var bodyReferralTemplate = swig.compileFile('./app/views/templates/referral-body-email.server.view.html');
 var subjectReferralTemplate = swig.compileFile('./app/views/templates/referral-subject-email.server.view.txt');
 
-function sendReferralEmail(referral) {
+function sendReferralEmail(referral, data) {
 	var mandrill_client = new mandrill.Mandrill(config.mandrill.apiKey);
-	var data = {referral:referral};
-	//console.log('Email data ' + JSON.stringify(data, null, ' '));
 	var html = bodyReferralTemplate(data);
+	var subject = subjectReferralTemplate(data);
 	var message = {
 		'html': html,
-		'subject': 'Awesome job!',
+		'subject': subject,
 		'from_email': 'jobs@actionably.com',
 		'from_name': 'Jobs',
 		'to': [{
@@ -62,7 +61,10 @@ exports.create = function (req) {
 	var referral = new Referral(req.body);
 	return referral.savePromise().then(function(referral) {
 		return referralByID(referral.id).then(function(fullReferral) {
-			return sendReferralEmail(fullReferral);
+			return sendReferralEmail(fullReferral, {
+				referral : fullReferral,
+				host : req.headers.host
+			});
 		});
 	});
 };

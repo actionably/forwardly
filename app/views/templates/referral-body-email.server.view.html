@@ -1,20 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
 </head>
-
 <body>
 	<p>Dear {{referral.firstName}},</p>
 	<p></p>
-	<p>{{referral.parentReferral.firstName}} {{referral.parentReferral.firstName}} thinks you would be interested in this
+	<p>
+		{{referral.parentReferral.firstName}} {{referral.parentReferral.lastName}} thinks you would be interested in this
 		role or might know someone who is. If you refer someone for this job you can share in the
-		${{referral.listing.referralFee}} referral fee!</p>
+		<span style="color:red;font-weight:bold">${{referral.listing.referralFee}} referral fee</span>!
+	</p>
+	<table cellspacing="0" cellpadding="0">
+		<tr>
+			<td align="center" width="300" height="40" bgcolor="#337ab7" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block;">
+				<a href="http://{{host}}/#!/referrals/apply/{{referral.id}}" style="font-size:16px; font-weight: bold; font-family: Helvetica, Arial, sans-serif; text-decoration: none; line-height:40px; width:100%; display:inline-block">
+					<span style="color: #FFFFFF">Refer Someone &gt;&gt;</span>
+				</a>
+			</td>
+		</tr>
+	</table>
+	<br/>
+	<table cellspacing="0" cellpadding="0">
+		<tr>
+			<td align="center" width="300" height="40" bgcolor="#5cb85c" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block;">
+				<a href="http://{{host}}/#!/referrals/create/{{referral.id}}" style="font-size:16px; font-weight: bold; font-family: Helvetica, Arial, sans-serif; text-decoration: none; line-height:40px; width:100%; display:inline-block">
+					<span style="color: #FFFFFF">Apply Now &gt;&gt;</span>
+				</a>
+			</td>
+		</tr>
+	</table>
 	<br/>
 	<p><h1>{{referral.listing.headline}}</h1></p>
 	<p>{{referral.listing.description|raw}}</p>
-	<button>Apply Now</button>
-	<button>Refer Someone</button>
+	<table cellspacing="0" cellpadding="0">
+		<tr>
+			<td align="center" width="300" height="40" bgcolor="#337ab7" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block;">
+				<a href="http://{{host}}/#!/referrals/apply/{{referral.id}}" style="font-size:16px; font-weight: bold; font-family: Helvetica, Arial, sans-serif; text-decoration: none; line-height:40px; width:100%; display:inline-block">
+					<span style="color: #FFFFFF">Refer Someone &gt;&gt;</span>
+				</a>
+			</td>
+		</tr>
+	</table>
+	<br/>
+	<table cellspacing="0" cellpadding="0">
+		<tr>
+			<td align="center" width="300" height="40" bgcolor="#5cb85c" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block;">
+				<a href="http://{{host}}/#!/referrals/create/{{referral.id}}" style="font-size:16px; font-weight: bold; font-family: Helvetica, Arial, sans-serif; text-decoration: none; line-height:40px; width:100%; display:inline-block">
+					<span style="color: #FFFFFF">Apply Now &gt;&gt;</span>
+				</a>
+			</td>
+		</tr>
+	</table>
 </body>
 
 </html>
