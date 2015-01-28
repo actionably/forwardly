@@ -1,5 +1,13 @@
 //$brand-primary: #967ADC;
 //$brand-success: #A0D468;
+//.sample { background: $brand-success; }
+@import url(http://fonts.googleapis.com/css?family=Merriweather|Open+Sans);
+
+// setting the fonts
+$font-family-sans-serif:  'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-serif:       'Merriweather', Georgia, "Times New Roman", Times, serif !default;
+$font-family-base:        $font-family-sans-serif !default;
+$headings-font-family: 	  $font-family-serif !default;
+
 @import "../public/lib/font-awesome/scss/font-awesome.scss";
 @import "../public/lib/bootstrap-sass-official/assets/stylesheets/bootstrap";
-.sample { background: $brand-success; }
