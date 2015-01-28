@@ -51,6 +51,18 @@ mongoose.Document.prototype.removePromise = function () {
 	});
 };
 
+mongoose.Document.prototype.populatePromise = function (field) {
+	var that = this;
+	return Q.Promise(function (resolve, reject) {
+		that.populate(field, function (err, item) {
+			if (err) {
+				reject(err);
+			}
+			resolve(item);
+		});
+	});
+};
+
 
 module.exports = function (db) {
 	// Initialize AWS

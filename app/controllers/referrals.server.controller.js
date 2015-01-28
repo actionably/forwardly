@@ -50,7 +50,13 @@ function sendReferralEmail(referral, data) {
 }
 
 function referralByID(id) {
-	return Referral.findById(id).populate('listing').populate('parentReferral').exec();
+	// this is weak. basically just doing populate('listing.company') but mongoose does not support this.
+	return Referral.findById(id).populate('listing').populate('parentReferral').exec().then(function(referral) {
+			return referral.listing.populatePromise('company').then(function() {
+				return referral;
+			});
+		}
+	);
 }
 
 
