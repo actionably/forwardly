@@ -9,8 +9,8 @@ angular.module('referrals').controller('ReferralsController', ['$scope', '$state
 		$scope.create = function() {
 			// Create new Referral object
 			var referral = new Referrals ({
-				listing: $stateParams.listingId,
-				parentReferral: $stateParams.referralId,
+				listing: this.referral.listing._id,
+				parentReferral: this.referral._id,
 				email: this.email,
 				firstName: this.firstName,
 				lastName: this.lastName,
@@ -18,12 +18,13 @@ angular.module('referrals').controller('ReferralsController', ['$scope', '$state
 				sendEmail:true
 			});
 
+			console.log('creating referral', referral);
+
 			// Redirect after save
 			referral.$save(function(response) {
 				// with the response, we redirect back to the listing with the parent referral
 				console.log('Referral Created: ', response._id);
 				var destination = 'listings/' + response.listing._id;
-				destination += response.parentReferral ? '/referrals/' + response.parentReferral._id : '';
 				// TODO: Put a success flash message here
 				$location.path(destination);
 				// Clear form fields

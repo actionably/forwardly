@@ -9,12 +9,12 @@ angular.module('referrals').config(['$stateProvider',
 			url: '/referrals',
 			templateUrl: 'modules/referrals/views/list-referrals.client.view.html'
 		}).
-        state('createReferral', {
-            url: '/referrals/create/:listingId',
-            templateUrl: 'modules/referrals/views/create-referral.client.view.html'
-        }).
+		state('createReferral', {
+			url: '/referrals/create/:listingId',
+			templateUrl: 'modules/referrals/views/create-referral.client.view.html'
+		}).
 		state('createReferral2', {
-			url: '/referrals/create/:listingId/:referralId',
+			url: '/referrals/forward/:referralId',
 			templateUrl: 'modules/referrals/views/create-referral.client.view.html'
 		}).
 		state('viewReferral', {

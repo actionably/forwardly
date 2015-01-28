@@ -30,6 +30,40 @@ angular.module('listings').controller('ListingsController', ['$scope', '$statePa
 			});
 		};
 
+		// Create new root Referral (with no parent, gets email and name from user object)
+		$scope.create_referral = function() {
+			// TODO: find the referral ID for this email address and this listings ID
+			Referrals.query({email: Authentication.user.email, listing: $stateParams.listingId}).$promise.then(
+				function (referrals) {
+					console.log('the referrals are ', referrals[0]);
+					if (referrals.length) {
+						var destination = 'referrals/' + referrals[0]._id;
+						$location.path(destination);
+					} else {
+						// Create new Referral object
+						var referral = new Referrals ({
+							listing: $stateParams.listingId,
+			                email: Authentication.user.email,
+			                firstName: Authentication.user.firstName,
+			                lastName: Authentication.user.lastName,
+			                sendEmail: false
+						});
+						// Redirect after save
+						referral.$save(function(response) {
+							// with the response, we redirect to the new parent referral page
+							var destination = 'referrals/' + response._id;
+							$location.path(destination);
+							// Clear form fields
+							$scope.name = '';
+						}, function(errorResponse) {
+							$scope.error = errorResponse.data.message;
+						});				
+					}				
+			});
+
+			
+		};		
+
 		// Remove existing Listing
 		$scope.remove = function( listing ) {
 			if ( listing ) { listing.$remove();

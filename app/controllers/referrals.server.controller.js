@@ -102,7 +102,7 @@ exports.delete = function (req) {
  * List of Referrals
  */
 exports.list = function (req) {
-	return Referral.find().sort('-created').exec();
+	return Referral.find(req.query).sort('-created').exec();
 };
 
 /**
