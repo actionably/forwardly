@@ -5,6 +5,7 @@ module.exports = {
 	assets: {
 		lib: {
 			css: [
+				'public/lib/font-awesome/css/font-awesome.min.css',
 				'public/lib/bootstrap/dist/css/application.min.css'
 			],
 			js: [
