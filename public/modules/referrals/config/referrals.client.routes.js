@@ -15,7 +15,7 @@ angular.module('referrals').config(['$stateProvider',
 		}).
 		state('createReferral2', {
 			url: '/referrals/forward/:referralId',
-			templateUrl: 'modules/referrals/views/create-referral.client.view.html'
+			templateUrl: 'modules/referrals/views/forward-referral.client.view.html'
 		}).
 		state('viewReferral', {
 			url: '/referrals/:referralId',

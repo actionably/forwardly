@@ -35,9 +35,9 @@ angular.module('listings').controller('ListingsController', ['$scope', '$statePa
 			// TODO: find the referral ID for this email address and this listings ID
 			Referrals.query({email: Authentication.user.email, listing: $stateParams.listingId}).$promise.then(
 				function (referrals) {
-					console.log('the referrals are ', referrals[0]);
+					console.log('found referrals for this email/listing ', referrals[0]);
 					if (referrals.length) {
-						var destination = 'referrals/' + referrals[0]._id;
+						var destination = 'referrals/forward/' + referrals[0]._id;
 						$location.path(destination);
 					} else {
 						// Create new Referral object
@@ -51,7 +51,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$statePa
 						// Redirect after save
 						referral.$save(function(response) {
 							// with the response, we redirect to the new parent referral page
-							var destination = 'referrals/' + response._id;
+							var destination = 'referrals/forward/' + response._id;
 							$location.path(destination);
 							// Clear form fields
 							$scope.name = '';

@@ -1,56 +1,59 @@
 <section data-ng-controller="ReferralsController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1>Refer someone for: {{ referral.listing.headline }}</h1>
-        <h3>
-        	From: {{ referral.firstName }} {{ referral.lastName }} &lt;{{ referral.email }}&gt;
-            (<a href="#">Not you?</a>)
-        </h3>
-	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == referral.user._id">
-		<a class="btn btn-primary" href="/#!/referrals/{{referral._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-	</div>
-
-
-    <div class="col-md-12">
-        <form class="form-horizontal" data-ng-submit="create()" novalidate>
-        	<fieldset>
-                <div class="form-group">
-                    <label class="control-label" for="email">Email Address</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="email" id="email" class="form-control" placeholder="email" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="firstName">First Name</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="firstName" id="firstName" class="form-control" placeholder="firstName" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="lastName">Last Name</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="lastName" id="lastName" class="form-control" placeholder="lastName" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="customMessage">Message</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="customMessage" id="customMessage" class="form-control" placeholder="customMessage" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-default">
-                </div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
-            </fieldset>
-        </form>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-12">
+                <img width="140" alt="referral.listing.company.name" class="pull-right img-rounded" ng-src="{{ referral.listing.company.imageUrl }}" />
+                <h1 data-ng-bind="referral.listing.headline"></h1>
+                <h2 data-ng-bind="referral.listing.company.name"></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+            <p>
+                <a href="/#!/referrals/forward/{{referral._id}}"><button class="btn btn-primary"><i class="glyphicon glyphicon-forward"></i> Refer Someone</button></a>
+                <a href="/#!/listings/{{referral.listing._id}}/apply{{ referral._id ? '/' + referral._id : '' }}">
+                    <button class="btn btn-success"><i class="glyphicon glyphicon-check"></i> Apply to this Job</button>
+                </a>
+            </p>    
+            </div>
+        </div>      
     </div>
+    <div>
+        <p>
+            Role: {{ referral.listing.role }}<br />
+            Location {{ referral.listing.location }}</br>
+            Fee: ${{ referral.listing.referralFee }}
+        <p>
 
+        <h3>Description</h3>
+        <p data-ng-bind-html="referral.listing.description"></p>
+
+        <h3>Tags</h3>
+        <p data-ng-bind="referral.listing.tags"></p>
+
+        <p ng-if="referral._id">Parent Referral Id: <b>{{ referral._id }}</b></p>
+
+        <p>
+            <a href="/#!/referrals/forward/{{referral._id}}"><button class="btn btn-primary"><i class="glyphicon glyphicon-forward"></i> Refer Someone</button></a>
+            <a href="/#!/listings/{{referral.listing._id}}/apply{{ referral._id ? '/' + referral._id : '' }}">
+                <button class="btn btn-success"><i class="glyphicon glyphicon-check"></i> Apply to this Job</button>
+            </a>
+        </p>
+    </div>
+    <div class="pull-right" data-ng-show="authentication.user._id == referral.listing.user._id">
+        <a class="btn btn-primary" href="/#!/listings/{{referral.listing._id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn btn-primary" data-ng-click="remove();">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
+    <small>
+        <em class="text-muted">
+            Posted on
+            <span data-ng-bind="referral.listing.created | date:'mediumDate'"></span>
+            by
+            <span data-ng-bind="referral.listing.user.displayName"></span>
+        </em>
+    </small>
 </section>
