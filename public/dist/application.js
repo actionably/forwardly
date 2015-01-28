@@ -566,6 +566,40 @@ angular.module('listings').controller('ListingsController', ['$scope', '$statePa
 			});
 		};
 
+		// Create new root Referral (with no parent, gets email and name from user object)
+		$scope.create_referral = function() {
+			// TODO: find the referral ID for this email address and this listings ID
+			Referrals.query({email: Authentication.user.email, listing: $stateParams.listingId}).$promise.then(
+				function (referrals) {
+					console.log('found referrals for this email/listing ', referrals[0]);
+					if (referrals.length) {
+						var destination = 'referrals/create/' + referrals[0]._id;
+						$location.path(destination);
+					} else {
+						// Create new Referral object
+						var referral = new Referrals ({
+							listing: $stateParams.listingId,
+			                email: Authentication.user.email,
+			                firstName: Authentication.user.firstName,
+			                lastName: Authentication.user.lastName,
+			                sendEmail: false
+						});
+						// Redirect after save
+						referral.$save(function(response) {
+							// with the response, we redirect to the new parent referral page
+							var destination = 'referrals/create/' + response._id;
+							$location.path(destination);
+							// Clear form fields
+							$scope.name = '';
+						}, function(errorResponse) {
+							$scope.error = errorResponse.data.message;
+						});				
+					}				
+			});
+
+			
+		};		
+
 		// Remove existing Listing
 		$scope.remove = function( listing ) {
 			if ( listing ) { listing.$remove();
@@ -661,12 +695,8 @@ angular.module('referrals').config(['$stateProvider',
 			url: '/referrals',
 			templateUrl: 'modules/referrals/views/list-referrals.client.view.html'
 		}).
-        state('createReferral', {
-            url: '/referrals/create/:listingId',
-            templateUrl: 'modules/referrals/views/create-referral.client.view.html'
-        }).
-		state('createReferral2', {
-			url: '/referrals/create/:listingId/:referralId',
+		state('createReferral', {
+			url: '/referrals/create/:referralId',
 			templateUrl: 'modules/referrals/views/create-referral.client.view.html'
 		}).
 		state('viewReferral', {
@@ -691,21 +721,24 @@ angular.module('referrals').controller('ReferralsController', ['$scope', '$state
 		$scope.create = function() {
 			// Create new Referral object
 			var referral = new Referrals ({
-				listing: $stateParams.listingId,
-                parentReferral: $stateParams.referralId,
-                email: this.email,
-                firstName: this.firstName,
-                lastName: this.lastName,
-                customMessage: this.customMessage
+				listing: this.referral.listing._id,
+				parentReferral: this.referral._id,
+				email: this.email,
+				firstName: this.firstName,
+				lastName: this.lastName,
+				customMessage: this.customMessage,
+				sendEmail:true
 			});
+
+			console.log('creating referral', referral);
 
 			// Redirect after save
 			referral.$save(function(response) {
-				// with the response, we redirect back to the listing with the parent referral
+				// with the response, we redirect back to the referral with the parent referral so they can view it again and send another
 				console.log('Referral Created: ', response._id);
-				var destination = 'listings/' + response.listing._id;
-				destination += response.parentReferral ? '/referrals/' + response.parentReferral : '';
+				var destination = 'referrals/' + response._id;
 				// TODO: Put a success flash message here
+				
 				$location.path(destination);
 				// Clear form fields
 				$scope.name = '';
