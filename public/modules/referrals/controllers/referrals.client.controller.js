@@ -10,11 +10,12 @@ angular.module('referrals').controller('ReferralsController', ['$scope', '$state
 			// Create new Referral object
 			var referral = new Referrals ({
 				listing: $stateParams.listingId,
-                parentReferral: $stateParams.referralId,
-                email: this.email,
-                firstName: this.firstName,
-                lastName: this.lastName,
-                customMessage: this.customMessage
+				parentReferral: $stateParams.referralId,
+				email: this.email,
+				firstName: this.firstName,
+				lastName: this.lastName,
+				customMessage: this.customMessage,
+				sendEmail:true
 			});
 
 			// Redirect after save

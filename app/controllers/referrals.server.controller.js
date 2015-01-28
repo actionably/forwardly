@@ -60,12 +60,17 @@ function referralByID(id) {
 exports.create = function (req) {
 	var referral = new Referral(req.body);
 	return referral.savePromise().then(function(referral) {
-		return referralByID(referral.id).then(function(fullReferral) {
-			return sendReferralEmail(fullReferral, {
-				referral : fullReferral,
-				host : req.headers.host
+		var promise = referralByID(referral.id);
+		if (req.body.sendEmail) {
+			return promise.then(function(fullReferral) {
+				return sendReferralEmail(fullReferral, {
+					referral : fullReferral,
+					host : req.headers.host
+				});
 			});
-		});
+		} else {
+			return promise;
+		}
 	});
 };
 
