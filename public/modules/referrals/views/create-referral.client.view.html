@@ -1,7 +1,21 @@
-<section data-ng-controller="ReferralsController">
+<section data-ng-controller="ReferralsController" data-ng-init="findOne()">
     <div class="page-header">
-        <h1>New Referral</h1>
+        <h1>Refer someone for: {{ referral.listing.headline }}</h1>
+        <h3>
+            From: {{ referral.firstName }} {{ referral.lastName }} &lt;{{ referral.email }}&gt;
+            (<a href="#">Not you?</a>)
+        </h3>
     </div>
+    <div class="pull-right" data-ng-show="authentication.user._id == referral.user._id">
+        <a class="btn btn-primary" href="/#!/referrals/{{referral._id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn btn-primary" data-ng-click="remove();">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
+
+
     <div class="col-md-12">
         <form class="form-horizontal" data-ng-submit="create()" novalidate>
             <fieldset>
@@ -32,10 +46,11 @@
                 <div class="form-group">
                     <input type="submit" class="btn btn-default">
                 </div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
+                <div data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </div>
             </fieldset>
         </form>
     </div>
+
 </section>

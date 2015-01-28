@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12">
             <p>
-                <a href="/#!/referrals/forward/{{referral._id}}"><button class="btn btn-primary"><i class="glyphicon glyphicon-forward"></i> Refer Someone</button></a>
+                <a href="/#!/referrals/create/{{referral._id}}"><button class="btn btn-primary"><i class="glyphicon glyphicon-forward"></i> Refer Someone</button></a>
                 <a href="/#!/listings/{{referral.listing._id}}/apply{{ referral._id ? '/' + referral._id : '' }}">
                     <button class="btn btn-success"><i class="glyphicon glyphicon-check"></i> Apply to this Job</button>
                 </a>
@@ -34,7 +34,7 @@
         <p ng-if="referral._id">Parent Referral Id: <b>{{ referral._id }}</b></p>
 
         <p>
-            <a href="/#!/referrals/forward/{{referral._id}}"><button class="btn btn-primary"><i class="glyphicon glyphicon-forward"></i> Refer Someone</button></a>
+            <a href="/#!/referrals/create/{{referral._id}}"><button class="btn btn-primary"><i class="glyphicon glyphicon-forward"></i> Refer Someone</button></a>
             <a href="/#!/listings/{{referral.listing._id}}/apply{{ referral._id ? '/' + referral._id : '' }}">
                 <button class="btn btn-success"><i class="glyphicon glyphicon-check"></i> Apply to this Job</button>
             </a>

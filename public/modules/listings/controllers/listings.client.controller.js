@@ -37,7 +37,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$statePa
 				function (referrals) {
 					console.log('found referrals for this email/listing ', referrals[0]);
 					if (referrals.length) {
-						var destination = 'referrals/forward/' + referrals[0]._id;
+						var destination = 'referrals/create/' + referrals[0]._id;
 						$location.path(destination);
 					} else {
 						// Create new Referral object
@@ -51,7 +51,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$statePa
 						// Redirect after save
 						referral.$save(function(response) {
 							// with the response, we redirect to the new parent referral page
-							var destination = 'referrals/forward/' + response._id;
+							var destination = 'referrals/create/' + response._id;
 							$location.path(destination);
 							// Clear form fields
 							$scope.name = '';
