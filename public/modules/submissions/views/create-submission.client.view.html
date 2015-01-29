@@ -1,0 +1,35 @@
+<section data-ng-controller="SubmissionsController" ng-init="findReferral()">
+    <div class="page-header">
+        <h1>New Submission</h1>
+    </div>
+    <div class="col-md-12">
+        <form class="form-horizontal" data-ng-submit="create()" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label" for="email">Email Address</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="email" id="email" class="form-control" placeholder="email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="firstName">First Name</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="firstName" id="firstName" class="form-control" placeholder="firstName" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="lastName">Last Name</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="lastName" id="lastName" class="form-control" placeholder="lastName" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-default">
+                </div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+            </fieldset>
+        </form>
+    </div>
+</section>

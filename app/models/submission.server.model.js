@@ -38,7 +38,7 @@ var SubmissionSchema = new Schema({
 	linkedInUrl: {
 		type: String
 	},
-	uploadedResumeId: {
+	uploadedResumeUrl: {
 		type: String
 	}
 });

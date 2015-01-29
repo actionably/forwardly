@@ -58,7 +58,7 @@ var ReferralSchema = new Schema({
 });
 
 ReferralSchema.method('fullName', function() {
-	return this.firstName + ' ' + this.lastname;
+	return this.firstName + ' ' + this.lastName;
 });
 
 ReferralSchema.plugin(deepPopulate);
