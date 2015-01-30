@@ -14,7 +14,7 @@ var mongoose = require('mongoose'),
 var SubmissionSchema = new Schema({
 	listing: {
 		type: Schema.ObjectId,
-		required: 'Please fill Submission listing',
+		required: 'Please fill in a Submission listing',
 		ref: 'Listing'
 	},
 	referral: {
@@ -25,14 +25,17 @@ var SubmissionSchema = new Schema({
 		type: String,
 		trim: true,
 		default: '',
+		required: 'Please fill in email',
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
 	firstName: {
 		type: String,
+		required: 'Please fill in first name',
 		trim: true
 	},
 	lastName: {
 		type: String,
+		required: 'Please fill in last name',
 		trim: true
 	},
 	linkedInUrl: {

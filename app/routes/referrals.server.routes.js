@@ -3,7 +3,7 @@
 module.exports = function(app) {
 	var users = require('../../app/controllers/users');
 	var referrals = require('../../app/controllers/referrals');
-    var pH = require('../utils/promiseHandler');
+	var pH = require('../utils/promiseHandler');
 
     // Referrals Routes
 	app.route('/referrals')

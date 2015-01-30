@@ -1,8 +1,8 @@
 'use strict';
 
 // Listings controller
-angular.module('listings').controller('ListingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Listings', 'Companies', 'Referrals',
-	function($scope, $stateParams, $location, Authentication, Listings, Companies, Referrals ) {
+angular.module('listings').controller('ListingsController', ['$scope', '$state', '$stateParams', '$location', 'Authentication', 'Listings', 'Companies', 'Referrals',
+	function($scope, $state, $stateParams, $location, Authentication, Listings, Companies, Referrals ) {
 		$scope.authentication = Authentication;
 
 		// Create new Listing
@@ -63,6 +63,14 @@ angular.module('listings').controller('ListingsController', ['$scope', '$statePa
 
 			
 		};		
+
+		$scope.apply = function() {
+			if ($scope.referral) {
+				$state.go('createSubmissionFromReferral', {referralId: $scope.referral._id});
+			} else {
+				$state.go('createSubmissionFromListing', {listingId: $scope.listing._id});
+			}
+		};
 
 		// Remove existing Listing
 		$scope.remove = function( listing ) {

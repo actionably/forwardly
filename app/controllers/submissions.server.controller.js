@@ -11,9 +11,7 @@ var mongoose = require('mongoose'),
  * Create a Submission
  */
 exports.create = function (req) {
-	var listing = req.listing;
 	var submission = new Submission(req.body);
-	submission.listing = listing;
 	return submission.savePromise();
 };
 

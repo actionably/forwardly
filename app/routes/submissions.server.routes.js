@@ -3,17 +3,17 @@
 module.exports = function(app) {
 	var users = require('../../app/controllers/users');
 	var submissions = require('../../app/controllers/submissions');
+	var pH = require('../utils/promiseHandler');
 
 	// Submissions Routes
 	app.route('/submissions')
-		.get(submissions.list)
-		.post(users.requiresLogin, submissions.create);
+		.get(pH.jsonp(submissions.list))
+		.post(users.requiresLogin, pH.jsonp(submissions.create));
 
 	app.route('/submissions/:submissionId')
-		.get(submissions.read)
-		.put(users.requiresLogin, submissions.hasAuthorization, submissions.update)
-		.delete(users.requiresLogin, submissions.hasAuthorization, submissions.delete);
+		.get(pH.jsonp(submissions.read))
+		.delete(users.requiresLogin, pH.jsonp(submissions.delete));
 
 	// Finish by binding the Submission middleware
-	app.param('submissionId', submissions.submissionByID);
+	app.param('submissionId', pH.param(submissions.submissionByID, 'submission'));
 };

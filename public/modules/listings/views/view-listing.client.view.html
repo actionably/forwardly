@@ -11,10 +11,8 @@
 			<div class="col-md-12">
 	        <p>
 	            <button ng-click="create_referral();" class="btn btn-primary"><i class="glyphicon glyphicon-forward"></i> Refer Someone</button>
-	            <a href="/#!/listings/{{listing._id}}/apply{{ referral._id ? '/' + referral._id : '' }}">
-	                <button class="btn btn-success"><i class="glyphicon glyphicon-check"></i> Apply to this Job</button>
-	            </a>
-	        </p>	
+                <button ng-click="apply()" class="btn btn-success"><i class="glyphicon glyphicon-check"></i> Apply to this Job</button>
+	        </p>
 	    	</div>
 	    </div>		
 	</div>
@@ -35,9 +33,7 @@
 
         <p>
 	        <button ng-click="create_referral();" class="btn btn-primary"><i class="glyphicon glyphicon-forward"></i> Refer Someone</button>
-            <a href="/#!/listings/{{listing._id}}/apply{{ referral._id ? '/' + referral._id : '' }}">
-                <button class="btn btn-success"><i class="glyphicon glyphicon-check"></i> Apply to this Job</button>
-            </a>
+            <button ng-click="apply()" class="btn btn-success"><i class="glyphicon glyphicon-check"></i> Apply to this Job</button>
         </p>
 	</div>
 	<div class="pull-right" data-ng-show="authentication.user._id == listing.user._id">

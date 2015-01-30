@@ -1,33 +1,49 @@
-<section data-ng-controller="SubmissionsController" ng-init="findReferral()">
+<section ng-controller="SubmissionsController" ng-init="initCreate()">
     <div class="page-header">
-        <h1>New Submission</h1>
+        <h1>Apply for {{listing.headline}}</h1>
     </div>
     <div class="col-md-12">
-        <form class="form-horizontal" data-ng-submit="create()" novalidate>
+        <form class="form-horizontal" ng-submit="create()" novalidate>
             <fieldset>
                 <div class="form-group">
                     <label class="control-label" for="email">Email Address</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="email" id="email" class="form-control" placeholder="email" required>
+                        <input type="text" ng-model="email" id="email" class="form-control" placeholder="email" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="firstName">First Name</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="firstName" id="firstName" class="form-control" placeholder="firstName" required>
+                        <input type="text" ng-model="firstName" id="firstName" class="form-control" placeholder="First Name" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="lastName">Last Name</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="lastName" id="lastName" class="form-control" placeholder="lastName" required>
+                        <input type="text" ng-model="lastName" id="lastName" class="form-control" placeholder="Last Name" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <input type="submit" class="btn btn-default">
+                    <label class="control-label" for="linkedInUrl">LinkedIn Url</label>
+                    <div class="controls">
+                        <input type="text" ng-model="linkedInUrl" id="linkedInUrl" class="form-control" placeholder="LinkedIn Url" required>
+                    </div>
                 </div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
+                <div class="form-group">
+                    <label class="control-label" for="linkedInUrl">Or Upload Resume</label>
+                    <div class="controls">
+                        <input type="file" id="files" name="files" onchange="angular.element(this).scope().s3_upload(this)" />
+                    </div>
+                    <div style="color:red" ng-show="upload.error">Error: {{upload.errorMessage}}</div>
+                    <div style="color:red" ng-show="errorLinkedInOrUpload">You must uploaded a resume or supply a LinkedIn url</div>
+                    <div ng-show="upload.progressing">Upload progress {{upload.percent}}%</div>
+                    <div ng-show="upload.complete">Upload complete. {{upload.url}}</div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Apply" class="btn btn-default">
+                </div>
+				<div ng-show="error" class="text-danger">
+					<strong ng-bind="error"></strong>
 				</div>
             </fieldset>
         </form>

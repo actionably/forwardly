@@ -9,8 +9,12 @@ angular.module('submissions').config(['$stateProvider',
 			url: '/submissions',
 			templateUrl: 'modules/submissions/views/list-submissions.client.view.html'
 		}).
-		state('createSubmission', {
-			url: '/submissions/create/:referralId',
+		state('createSubmissionFromReferral', {
+			url: '/submissions/create/referral/:referralId',
+			templateUrl: 'modules/submissions/views/create-submission.client.view.html'
+		}).
+		state('createSubmissionFromListing', {
+			url: '/submissions/create/listing/:listingId',
 			templateUrl: 'modules/submissions/views/create-submission.client.view.html'
 		}).
 		state('viewSubmission', {
