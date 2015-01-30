@@ -19,8 +19,8 @@
 	<div>
 		<p>
 			Role: {{ listing.role }}<br />
-			Location {{ listing.location }}</br>
-			Fee: ${{ listing.referralFee }}
+			Location: {{ listing.location }}</br>
+			Fee: ${{ listing.referralFee | number }}
 		<p>
 
 		<h3>Description</h3>
@@ -35,6 +35,11 @@
 	        <button ng-click="create_referral();" class="btn btn-primary"><i class="glyphicon glyphicon-forward"></i> Refer Someone</button>
             <button ng-click="apply()" class="btn btn-success"><i class="glyphicon glyphicon-check"></i> Apply to this Job</button>
         </p>
+
+        <h3>Referrals</h3>
+        <p>
+        {{ listing.referrals.length }}
+    	</p>
 	</div>
 	<div class="pull-right" ng-show="authentication.user._id == listing.user._id">
 		<a class="btn btn-primary" href="/#!/listings/{{listing._id}}/edit">

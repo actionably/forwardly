@@ -10,6 +10,17 @@ $font-family-base:        $font-family-sans-serif !default;
 $headings-font-family: 	  $font-family-serif !default;
 $headings-font-weight:    700 !default;
 
-
 @import "../public/lib/font-awesome/scss/font-awesome.scss";
 @import "../public/lib/bootstrap-sass-official/assets/stylesheets/bootstrap";
+
+.nice-show-hide {
+}
+
+.nice-show-hide {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.nice-show-hide.ng-hide {
+  opacity:0;
+}
