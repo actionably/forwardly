@@ -21,6 +21,10 @@ angular.module('listings').config(['$stateProvider',
 			url: '/listings/:listingId/edit',
 			templateUrl: 'modules/listings/views/edit-listing.client.view.html'
 		}).
+		state('viewListingStats', {
+			url: '/listings/:listingId/stats',
+			templateUrl: 'modules/listings/views/view-listing-stats.client.view.html'
+		}).		
         state('applyListing', {
             url: '/listings/:listingId/apply',
             templateUrl: 'modules/listings/views/apply-listing.client.view.html'
