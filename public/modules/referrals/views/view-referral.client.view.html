@@ -1,10 +1,10 @@
-<section data-ng-controller="ReferralsController" data-ng-init="findOne()">
+<section ng-controller="ReferralsController" ng-init="findOne()">
     <div class="page-header">
         <div class="row">
             <div class="col-md-12">
                 <img width="140" alt="referral.listing.company.name" class="pull-right img-rounded" ng-src="{{ referral.listing.company.imageUrl }}" />
-                <h1 data-ng-bind="referral.listing.headline"></h1>
-                <h2 data-ng-bind="referral.listing.company.name"></h2>
+                <h1 ng-bind="referral.listing.headline"></h1>
+                <h2 ng-bind="referral.listing.company.name"></h2>
             </div>
         </div>
         <div class="row">
@@ -26,10 +26,10 @@
         <p>
 
         <h3>Description</h3>
-        <p data-ng-bind-html="referral.listing.description"></p>
+        <p ng-bind-html="referral.listing.description"></p>
 
         <h3>Tags</h3>
-        <p data-ng-bind="referral.listing.tags"></p>
+        <p ng-bind="referral.listing.tags"></p>
 
         <p ng-if="referral._id">Parent Referral Id: <b>{{ referral._id }}</b></p>
 
@@ -40,20 +40,20 @@
             </a>
         </p>
     </div>
-    <div class="pull-right" data-ng-show="authentication.user._id == referral.listing.user._id">
+    <div class="pull-right" ng-show="authentication.user._id == referral.listing.user._id">
         <a class="btn btn-primary" href="/#!/listings/{{referral.listing._id}}/edit">
             <i class="glyphicon glyphicon-edit"></i>
         </a>
-        <a class="btn btn-primary" data-ng-click="remove();">
+        <a class="btn btn-primary" ng-click="remove();">
             <i class="glyphicon glyphicon-trash"></i>
         </a>
     </div>
     <small>
         <em class="text-muted">
             Posted on
-            <span data-ng-bind="referral.listing.created | date:'mediumDate'"></span>
+            <span ng-bind="referral.listing.created | date:'mediumDate'"></span>
             by
-            <span data-ng-bind="referral.listing.user.displayName"></span>
+            <span ng-bind="referral.listing.user.displayName"></span>
         </em>
     </small>
 </section>

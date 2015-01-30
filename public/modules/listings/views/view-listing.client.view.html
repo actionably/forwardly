@@ -1,10 +1,10 @@
-<section data-ng-controller="ListingsController" data-ng-init="findOne()">
+<section ng-controller="ListingsController" ng-init="findOne()">
 	<div class="page-header">
 		<div class="row">
 			<div class="col-md-12">
 				<img width="140" alt="listing.company.name" class="pull-right img-rounded" ng-src="{{ listing.company.imageUrl }}" />
-				<h1 data-ng-bind="listing.headline"></h1>
-				<h2 data-ng-bind="listing.company.name"></h2>
+				<h1 ng-bind="listing.headline"></h1>
+				<h2 ng-bind="listing.company.name"></h2>
 			</div>
 		</div>
 		<div class="row">
@@ -24,10 +24,10 @@
 		<p>
 
 		<h3>Description</h3>
-		<p data-ng-bind-html="listing.description"></p>
+		<p ng-bind-html="listing.description"></p>
 
 		<h3>Tags</h3>
-		<p data-ng-bind="listing.tags"></p>
+		<p ng-bind="listing.tags"></p>
 
 		<p ng-if="referral._id">Parent Referral Id: <b>{{ referral._id }}</b></p>
 
@@ -36,20 +36,20 @@
             <button ng-click="apply()" class="btn btn-success"><i class="glyphicon glyphicon-check"></i> Apply to this Job</button>
         </p>
 	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == listing.user._id">
+	<div class="pull-right" ng-show="authentication.user._id == listing.user._id">
 		<a class="btn btn-primary" href="/#!/listings/{{listing._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
+		<a class="btn btn-primary" ng-click="remove();">
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>
 	<small>
 		<em class="text-muted">
 			Posted on
-			<span data-ng-bind="listing.created | date:'mediumDate'"></span>
+			<span ng-bind="listing.created | date:'mediumDate'"></span>
 			by
-			<span data-ng-bind="listing.user.displayName"></span>
+			<span ng-bind="listing.user.displayName"></span>
 		</em>
 	</small>
 </section>

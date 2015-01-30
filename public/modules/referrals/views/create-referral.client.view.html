@@ -1,4 +1,4 @@
-<section data-ng-controller="ReferralsController" data-ng-init="findOne()">
+<section ng-controller="ReferralsController" ng-init="findOne()">
     <div class="page-header">
         <h1>Refer someone for: <a href="/#!/listings/{{ referral.listing._id }}">{{ referral.listing.headline }}</a></h1>
         <h3>
@@ -6,48 +6,48 @@
             (<a href="#">Not you?</a>)
         </h3>
     </div>
-    <div class="pull-right" data-ng-show="authentication.user._id == referral.user._id">
+    <div class="pull-right" ng-show="authentication.user._id == referral.user._id">
         <a class="btn btn-primary" href="/#!/referrals/{{referral._id}}/edit">
             <i class="glyphicon glyphicon-edit"></i>
         </a>
-        <a class="btn btn-primary" data-ng-click="remove();">
+        <a class="btn btn-primary" ng-click="remove();">
             <i class="glyphicon glyphicon-trash"></i>
         </a>
     </div>
 
 
     <div class="col-md-12">
-        <form class="form-horizontal" data-ng-submit="create()" novalidate>
+        <form class="form-horizontal" ng-submit="create()" novalidate>
             <fieldset>
                 <div class="form-group">
                     <label class="control-label" for="email">Email Address</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="email" id="email" class="form-control" placeholder="email" required>
+                        <input type="text" ng-model="email" id="email" class="form-control" placeholder="email" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="firstName">First Name</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="firstName" id="firstName" class="form-control" placeholder="firstName" required>
+                        <input type="text" ng-model="firstName" id="firstName" class="form-control" placeholder="firstName" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="lastName">Last Name</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="lastName" id="lastName" class="form-control" placeholder="lastName" required>
+                        <input type="text" ng-model="lastName" id="lastName" class="form-control" placeholder="lastName" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="customMessage">Message</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="customMessage" id="customMessage" class="form-control" placeholder="customMessage" required>
+                        <input type="text" ng-model="customMessage" id="customMessage" class="form-control" placeholder="customMessage" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-default">
                 </div>
-                <div data-ng-show="error" class="text-danger">
-                    <strong data-ng-bind="error"></strong>
+                <div ng-show="error" class="text-danger">
+                    <strong ng-bind="error"></strong>
                 </div>
             </fieldset>
         </form>

@@ -1,9 +1,9 @@
-<section data-ng-controller="ListingsController" data-ng-init="findOne()">
+<section ng-controller="ListingsController" ng-init="findOne()">
     <div class="page-header">
         <h1>Edit Listing</h1>
     </div>
     <div class="col-md-12">
-        <form class="form-horizontal" data-ng-submit="update()" novalidate>
+        <form class="form-horizontal" ng-submit="update()" novalidate>
             <fieldset>
                 <div class="form-group">    
                     <h4>Company: {{ listing.company.name }}</h4>
@@ -11,7 +11,7 @@
                 <div class="form-group">
                     <label class="control-label" for="headline">Headline</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="listing.headline" id="name" class="form-control" placeholder="Headline" required>
+                        <input type="text" ng-model="listing.headline" id="name" class="form-control" placeholder="Headline" required>
                     </div>
                 </div>
                <div class="form-group">
@@ -23,34 +23,34 @@
                <div class="form-group">
                     <label class="control-label" for="location">Location</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="listing.location" id="name" class="form-control" placeholder="Location" required>
+                        <input type="text" ng-model="listing.location" id="name" class="form-control" placeholder="Location" required>
                     </div>
                 </div> 
                <div class="form-group">
                     <label class="control-label" for="headline">Role</label>
                     <div class="controls">
-                        <select data-ng-model="listing.role" id="role" class="form-control" required ng-options="role.name as role.name for role in roles" >
+                        <select ng-model="listing.role" id="role" class="form-control" required ng-options="role.name as role.name for role in roles" >
                         </select>
                     </div>
                 </div>       
                <div class="form-group">
                     <label class="control-label" for="tags">Tags</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="listing.tags" id="name" class="form-control" placeholder="Tags">
+                        <input type="text" ng-model="listing.tags" id="name" class="form-control" placeholder="Tags">
                     </div>
                 </div>        
                <div class="form-group">
                     <label class="control-label" for="referralFee">Referral Fee (USD)</label>
                     <div class="input-group">
                         <div class="input-group-addon">$</div>
-                        <input type="text" data-ng-model="listing.referralFee" id="name" class="form-control" placeholder="Referral Fee" required>
+                        <input type="text" ng-model="listing.referralFee" id="name" class="form-control" placeholder="Referral Fee" required>
                     </div>
                 </div>                                                         
                 <div class="form-group">
                     <input type="submit" value="Update" class="btn btn-default">
                 </div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
+				<div ng-show="error" class="text-danger">
+					<strong ng-bind="error"></strong>
 				</div>
             </fieldset>
         </form>
