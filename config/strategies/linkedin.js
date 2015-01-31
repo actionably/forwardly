@@ -5,18 +5,20 @@
  */
 var passport = require('passport'),
 	url = require('url'),
-	LinkedInStrategy = require('passport-linkedin').Strategy,
+	LinkedInStrategy = require('passport-linkedin-oauth2').Strategy,
 	config = require('../config'),
 	users = require('../../app/controllers/users');
 
 module.exports = function() {
 	// Use linkedin strategy
 	passport.use(new LinkedInStrategy({
-			consumerKey: config.linkedin.clientID,
-			consumerSecret: config.linkedin.clientSecret,
+			clientID: config.linkedin.clientID,
+			clientSecret: config.linkedin.clientSecret,
 			callbackURL: config.linkedin.callbackURL,
-			passReqToCallback: true,
-			profileFields: ['id', 'first-name', 'last-name', 'email-address']
+			profileFields: ['id', 'first-name', 'last-name', 'email-address'],
+			scope: ['w_messages', 'r_network', 'r_emailaddress', 'r_fullprofile', 'r_contactinfo'],
+			state:true,
+			passReqToCallback:true
 		},
 		function(req, accessToken, refreshToken, profile, done) {
 			// Set the provider data and include tokens
@@ -38,6 +40,6 @@ module.exports = function() {
 
 			// Save the user OAuth profile
 			users.saveOAuthUserProfile(req, providerUserProfile, done);
-		}
+			}
 	));
 };
