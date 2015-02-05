@@ -17,6 +17,8 @@
     "s3upload": "git://github.com/flyingsparx/s3upload-coffee-javascript.git",
     "textAngular": "~1.3.2",
     "font-awesome": "*",
-    "bootstrap-sass-official": "~3.3.3"
+    "bootstrap-sass-official": "~3.3.3",
+    "lunr.js": "~0.5.7",
+    "lodash": "~2.4.1"
   }
 }

@@ -37,8 +37,9 @@ module.exports = {
 				'public/lib/s3upload/s3upload.js',
 				'public/lib/textAngular/dist/textAngular-rangy.min.js',
 				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
-				'public/lib/textAngular/dist/textAngular.min.js'
-
+				'public/lib/textAngular/dist/textAngular.min.js',
+				'public/lib/lunr.js/lunr.min.js',
+				'public/lib/lodash/dist/lodash.min.js'
 			]
 		},
 		css: [

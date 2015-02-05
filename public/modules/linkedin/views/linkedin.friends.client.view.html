@@ -6,9 +6,9 @@
         Search: <input style="margin: 3px" ng-model="query">
     </div>
     <div class="list-group" ng-show="friends.length">
-        <div ng-repeat="friend in friends | filter:query" class="list-group-item">
+        <div ng-repeat="friend in friends | lunrFilter:query:friendIndex" class="list-group-item">
             <img ng-src="{{friend.pictureUrl}}" style="float: left; margin: 3px"/>
-			<h4 class="list-group-item-heading">
+        		<h4 class="list-group-item-heading">
                 {{friend.firstName}} {{friend.lastName}}
             </h4>
             <div>
