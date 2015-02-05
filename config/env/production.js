@@ -44,7 +44,7 @@ module.exports = {
 	linkedin: {
 		clientID: process.env.LINKEDIN_ID || 'APP_ID',
 		clientSecret: process.env.LINKEDIN_SECRET || 'APP_SECRET',
-		callbackURL: 'http://forwardly.heroku.com/auth/linkedin/callback'
+		callbackURL: 'http://forwardly.herokuapp.com/auth/linkedin/callback'
 	},
 	github: {
 		clientID: process.env.GITHUB_ID || 'APP_ID',
