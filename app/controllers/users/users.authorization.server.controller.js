@@ -35,6 +35,23 @@ exports.requiresLogin = function(req, res, next) {
 };
 
 /**
+ * Require linkedin connection.
+ */
+exports.requiresLinkedin = function(req, res, next) {
+	if (!req.isAuthenticated()) {
+		return res.status(401).send({
+			message: 'User is not logged in'
+		});
+	}
+	if (!req.user.additionalProvidersData.linkedin) {
+		return res.status(401).send({
+			message: 'User is not connected to linkedin'
+		});
+	}
+	next();
+};
+
+/**
  * User authorizations routing middleware
  */
 exports.hasAuthorization = function(roles) {

@@ -1,0 +1,34 @@
+<section>
+    <div class="page-header">
+        <h1>LinkedIn Friends</h1>
+    </div>
+    <div>
+        Search: <input style="margin: 3px" ng-model="query">
+    </div>
+    <div class="list-group" ng-show="friends.length">
+        <div ng-repeat="friend in friends | filter:query" class="list-group-item">
+            <img ng-src="{{friend.pictureUrl}}" style="float: left; margin: 3px"/>
+			<h4 class="list-group-item-heading">
+                {{friend.firstName}} {{friend.lastName}}
+            </h4>
+            <div>
+                {{friend.headline}}
+            </div>
+            <div>
+                {{friend.location.name}}
+            </div>
+            <div ng-repeat="position in friend.positions.values">
+                <div>{{position.company.name}}</div>
+                <div>{{position.title}}</div>
+                <div>{{position.summary}}</div>
+            </div>
+            <a href="{{friend.publicProfileUrl}}" target="_blank">{{friend.publicProfileUrl}}</a>
+        </div>
+    </div>
+    <div class="alert alert-warning text-center" ng-show="!friends.$resolved">
+        Loading Friends..
+    </div>
+    <div class="alert alert-warning text-center" ng-show="friends.$resolved && friends.length==0">
+        No LinkedIn friends. That's kinda lame.
+    </div>
+</section>
