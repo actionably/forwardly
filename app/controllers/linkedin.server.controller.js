@@ -15,6 +15,6 @@ var ALL_FIELDS = '(id,first-name,last-name,headline,location:(name,country:(code
 exports.friends = function (req) {
 	var user = req.user;
 	return LinkedIn.get('/people/~/connections:'+ALL_FIELDS, user).then(function (data) {
-		return _.filter(data.values, function(person) { return person.id!=='private' });
+		return _.filter(data.values, function(person) { return person.id!=='private'; });
 	});
 };
