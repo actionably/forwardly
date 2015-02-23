@@ -424,8 +424,8 @@ angular.module('linkedin').config(['$stateProvider',
 		// Listings state routing
 		$stateProvider.
 			state('linkedInFriends', {
-				url: '/linkedin/friends',
-				templateUrl: 'modules/linkedin/views/linkedin.friends.client.view.html',
+				url: '/integrations/friends',
+				templateUrl: 'modules/integrations/views/integrations.friends.client.view.html',
 				controller:'LinkedInFriendsController'
 			});
 	}
@@ -438,7 +438,7 @@ angular.module('linkedin').config(['$stateProvider',
 angular.module('linkedin').controller('LinkedInFriendsController', ['$scope', '$state', '$stateParams', '$location', '$resource', 'Authentication',
 	function($scope, $state, $stateParams, $location, $resource, Authentication) {
 		$scope.authentication = Authentication;
-		$resource('linkedin/friends').query().$promise.then(function(friends) {
+		$resource('integrations/friends').query().$promise.then(function(friends) {
 			$scope.friends = friends;
 			var index = lunr(function() {
 				this.field('name');

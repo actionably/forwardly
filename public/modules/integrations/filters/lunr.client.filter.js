@@ -2,7 +2,7 @@
 'use strict';
 
 
-angular.module('linkedin').filter('lunrFilter', [
+angular.module('integrations').filter('lunrFilter', [
 	function() {
 		return function (items, text, index) {
 			if (!text) {

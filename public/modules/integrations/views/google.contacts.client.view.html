@@ -1,0 +1,24 @@
+<section>
+    <div class="page-header">
+        <h1>Google Contacts</h1>
+    </div>
+    <div>
+        Search: <input style="margin: 3px" ng-model="query">
+    </div>
+    <div class="list-group" ng-show="contacts.length">
+        <div ng-repeat="contact in contacts | filter:query" class="list-group-item">
+            <h4 class="list-group-item-heading">
+                {{contact.name}}
+            </h4>
+            <div ng-repeat="email in contact.emails">
+                <div>{{email}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-warning text-center" ng-show="!contacts.$resolved">
+        Loading Contacts...
+    </div>
+    <div class="alert alert-warning text-center" ng-show="contacts.$resolved && contacts.length==0">
+        No Google contacts. That's kinda lame.
+    </div>
+</section>
