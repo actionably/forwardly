@@ -53,7 +53,7 @@ ApplicationConfiguration.registerModule('core');
 'use strict';
 
 // Use application configuration module to register a new module
-ApplicationConfiguration.registerModule('linkedin');
+ApplicationConfiguration.registerModule('integrations');
 
 'use strict';
 
@@ -419,14 +419,19 @@ angular.module('core').service('Random', [
 'use strict';
 
 //Setting up route
-angular.module('linkedin').config(['$stateProvider',
+angular.module('integrations').config(['$stateProvider',
 	function ($stateProvider) {
 		// Listings state routing
-		$stateProvider.
-			state('linkedInFriends', {
-				url: '/integrations/friends',
-				templateUrl: 'modules/integrations/views/integrations.friends.client.view.html',
+		$stateProvider
+			.state('linkedInFriends', {
+				url: '/linkedin/friends',
+				templateUrl: 'modules/integrations/views/linkedin.friends.client.view.html',
 				controller:'LinkedInFriendsController'
+			})
+			.state('googleContacts', {
+				url: '/google/contacts',
+				templateUrl: 'modules/integrations/views/google.contacts.client.view.html',
+				controller:'GoogleContactsController'
 			});
 	}
 ]);
@@ -434,11 +439,20 @@ angular.module('linkedin').config(['$stateProvider',
 /* global _,lunr */
 'use strict';
 
-// Listings controller
-angular.module('linkedin').controller('LinkedInFriendsController', ['$scope', '$state', '$stateParams', '$location', '$resource', 'Authentication',
+angular.module('integrations').controller('GoogleContactsController', ['$scope', '$state', '$stateParams', '$location', '$resource', 'Authentication',
 	function($scope, $state, $stateParams, $location, $resource, Authentication) {
 		$scope.authentication = Authentication;
-		$resource('integrations/friends').query().$promise.then(function(friends) {
+		$scope.contacts = $resource('google/contacts').query();
+	}
+]);
+
+/* global _,lunr */
+'use strict';
+
+angular.module('integrations').controller('LinkedInFriendsController', ['$scope', '$state', '$stateParams', '$location', '$resource', 'Authentication',
+	function($scope, $state, $stateParams, $location, $resource, Authentication) {
+		$scope.authentication = Authentication;
+		$resource('linkedin/friends').query().$promise.then(function(friends) {
 			$scope.friends = friends;
 			var index = lunr(function() {
 				this.field('name');
@@ -469,7 +483,7 @@ angular.module('linkedin').controller('LinkedInFriendsController', ['$scope', '$
 'use strict';
 
 
-angular.module('linkedin').filter('lunrFilter', [
+angular.module('integrations').filter('lunrFilter', [
 	function() {
 		return function (items, text, index) {
 			if (!text) {
