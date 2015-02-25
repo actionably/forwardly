@@ -22,7 +22,7 @@ exports.linkedin_friends = function (req) {
 
 exports.google_contacts = function (req) {
 	var user = req.user;
-	return Google.get('/feeds/contacts/default/full?alt=json&max-results=2000', user).then(function(data) {
+	return Google.get('https://www.google.com/m8/feeds/contacts/default/full?alt=json&max-results=2000', user).then(function(data) {
 		return _.map(data.feed.entry, function(entry) {
 			return {
 				name: entry.title.$t,

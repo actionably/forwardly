@@ -8,11 +8,11 @@ var Q = require('q'),
 	config = require('../../config/config'),
 	_ = require('lodash');
 
-exports.get = function (partialUrl, user) {
-	var accessToken = user.additionalProvidersData.google.accessToken;
+exports.get = function (url, userOrToken) {
+	var accessToken = (typeof userOrToken === 'string' ? userOrToken : userOrToken.additionalProvidersData.google.accessToken);
 	var oauth2 = new OAuth2(config.google.clientID, config.google.clientSecret);
 	return Q.Promise(function (resolve, reject) {
-		oauth2.get('https://www.google.com/m8'+partialUrl, accessToken,
+		oauth2.get(url, accessToken,
 			function(error, data) {
 				if (error) {
 					reject(error);

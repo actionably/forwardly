@@ -22,6 +22,7 @@ var express = require('express'),
 	Q = require('q'),
 	AWS = require('aws-sdk'),
 	mongoose = require('mongoose'),
+	queues = require('../app/utils/queues'),
 	path = require('path');
 
 /*
@@ -67,6 +68,9 @@ mongoose.Document.prototype.populatePromise = function (field) {
 module.exports = function (db) {
 	// Initialize AWS
 	AWS.config.update({accessKeyId: config.amazonAWS.clientID, secretAccessKey: config.amazonAWS.clientSecret});
+
+	// initialize ironmq queues
+	queues.init(config);
 
 	// Initialize express app
 	var app = express();

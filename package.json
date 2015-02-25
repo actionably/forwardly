@@ -28,6 +28,7 @@
     "glob": "~4.0.5",
     "grunt-cli": "~0.1.13",
     "helmet": "~0.4.0",
+    "iron_mq": "^0.2.3",
     "lodash": "~2.4.1",
     "mandrill-api": "~1.0.41",
     "method-override": "~2.2.0",

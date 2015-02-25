@@ -11,6 +11,11 @@ module.exports = {
 		clientSecret: process.env.AMAZONAWS_SECRET || 'APP_SECRET',
 		s3Bucket: process.env.AMAZONAWS_S3_BUCKET || 'forwardly.dev.uploads'
 	},
+	ironIO : {
+		token : process.env.IRON_TOKEN,
+		projectId : process.env.IRON_PROJECT_ID,
+		workerUrl : process.env.IRON_WORKER_URL
+	},
 	mandrill: {
 		apiKey: process.env.MANDRILL_APIKEY || 'API_KEY',
 		username: process.env.MANDRILL_USERNAME || 'USERNAME'
