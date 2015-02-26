@@ -2,9 +2,9 @@
 
 module.exports = {
 	app: {
-		title: 'Forwardly',
-		description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
-		keywords: 'MongoDB, Express, AngularJS, Node.js'
+		title: 'Actionably',
+		description: 'Looking to hire great people? Find job candidates using your own social network.',
+		keywords: 'recruiting, hiring, jobs, social network, networking, hr'
 	},
 	amazonAWS: {
 		clientID: process.env.AMAZONAWS_ID || 'APP_ID',
