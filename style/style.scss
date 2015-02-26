@@ -4,7 +4,7 @@
 @import url(http://fonts.googleapis.com/css?family=Merriweather:400,700|Open+Sans:400italic,400,700);
 
 // setting the fonts
-$font-family-sans-serif:  'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-sans-serif:  Verdana, 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-serif:       'Merriweather', Georgia, "Times New Roman", Times, serif !default;
 $font-family-base:        $font-family-sans-serif !default;
 $headings-font-family: 	  $font-family-serif !default;
@@ -23,4 +23,8 @@ $headings-font-weight:    700 !default;
 
 .nice-show-hide.ng-hide {
   opacity:0;
+}
+
+.jumbotron {
+	background: blue;
 }
