@@ -128,7 +128,7 @@ module.exports = function (db) {
 		extended: true
 	}));
 	app.use(bodyParser.json());
-	app.use(methodOverride());
+	app.use(methodOverride('_method', {methods:['GET', 'POST']}));
 
 	// Enable jsonp
 	app.enable('jsonp callback');

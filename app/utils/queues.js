@@ -26,7 +26,8 @@ function configureQueue(imq, queueName, subscriberUrl) {
 	var queue = imq.queue(queueName);
 	queue.update({
 			push_type: 'unicast',
-			retries: 3,
+			retries: 1,
+			retries_delay: 120,
 			error_queue: 'error_queue',
 			subscribers: [
 				{url: subscriberUrl}
@@ -41,6 +42,9 @@ function configureQueue(imq, queueName, subscriberUrl) {
 
 exports.init = function(config) {
 	var imq = new iron_mq.Client();
+	configureQueue(imq, 'process_db_items_queue', config.ironIO.workerUrl+'/worker/processDbItems');
+	configureQueue(imq, 'extract_contacts_queue', config.ironIO.workerUrl+'/emails/extractContacts');
+	configureQueue(imq, 'add_fullcontact_queue', config.ironIO.workerUrl+'/emails/addFullContact');
 	configureQueue(imq, 'email_queue', config.ironIO.workerUrl+'/emails/downloadOne');
 	configureQueue(imq, 'email_list_queue', config.ironIO.workerUrl+'/emails/downloadList');
 };

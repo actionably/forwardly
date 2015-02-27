@@ -11,6 +11,9 @@ module.exports = {
 		clientSecret: process.env.AMAZONAWS_SECRET || 'APP_SECRET',
 		s3Bucket: process.env.AMAZONAWS_S3_BUCKET || 'forwardly.dev.uploads'
 	},
+	fullContact: {
+		apiKey: process.env.FULLCONTACT_APIKEY
+	},
 	ironIO : {
 		token : process.env.IRON_TOKEN,
 		projectId : process.env.IRON_PROJECT_ID,
