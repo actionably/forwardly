@@ -2,9 +2,10 @@
 //$brand-success: #A0D468;
 //.sample { background: $brand-success; }
 @import url(http://fonts.googleapis.com/css?family=Merriweather:400,700|Open+Sans:400italic,400,700);
+@import "/lib/animate/animate.css";
 
 // setting the fonts
-$font-family-sans-serif:  Verdana, 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-serif:       'Merriweather', Georgia, "Times New Roman", Times, serif !default;
 $font-family-base:        $font-family-sans-serif !default;
 $headings-font-family: 	  $font-family-serif !default;
@@ -12,6 +13,7 @@ $headings-font-weight:    700 !default;
 
 @import "../public/lib/font-awesome/scss/font-awesome.scss";
 @import "../public/lib/bootstrap-sass-official/assets/stylesheets/bootstrap";
+
 
 .nice-show-hide {
 }
@@ -28,3 +30,6 @@ $headings-font-weight:    700 !default;
 //pages
 @import "pages/home";
 
+footer {
+	font-size: .5em;
+}

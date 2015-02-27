@@ -1,9 +1,39 @@
 div#homepage{
+	.video_header {
+		position: relative;
+		width: 100%;
+		overflow: hidden;
+		padding: 50px 0;
+	}
+
+	.vjs-tech{
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	video.vjs-tech {
+		width: auto;
+		height: auto;
+		min-width: 100%;
+	}	
+	.video_overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0.4;
+		background-image: url('http://d2bptzq05weps4.cloudfront.net/assets/patterns/video-overlay-01e8451aa05602ad9e21b2a0f924d373.png');
+	}
 	.jumbotron {
 		padding: 10px;
-		background: url('http://uploads.strikinglycdn.com/static/backgrounds/striking-pack-1/26.jpg');
 		background-size: cover;
 		background-position: 49%;
 		background-repeat: no-repeat;
+		color: #ffffff;
+		z-index: 1;
+	}
+	.jumbotron ul {
+		list-style-type: none;
 	}
 }

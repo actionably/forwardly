@@ -45,6 +45,8 @@
 <body class="ng-cloak">
 	{% block content %}{% endblock %}
 
+	<footer ng-include="'/modules/core/views/footer.client.view.html'"></footer>
+
 	<!--Embedding The User Object-->
 	<script type="text/javascript">
 		var user = {{ user | json | safe }};

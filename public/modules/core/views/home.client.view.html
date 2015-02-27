@@ -1,100 +1,88 @@
 <section ng-controller="HomeController">
-<div id="homepage">	
-	<div class="jumbotron text-center">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
-				<img alt="Actionably" class="img-responsive text-center" src="modules/core/img/brand/logo.png" />
+<div id="homepage">
+	<div class="video_header">
+		<video id="video_homepage_html5_api" class="vjs-tech" autoplay="" loop="" preload="auto" poster="//d2bptzq05weps4.cloudfront.net/assets/video_headers/homepage/home_video_02_2015_latest_clips-a3b0a9559ecaecce2355e8e09dcedae8.jpg" muted="" src="//d2bptzq05weps4.cloudfront.net/assets/video_headers/homepage/home_video_02_2015_latest_clips-fe6f1c1e8bc77d83be417050b86f24bb.mp4">
+		<source src="//d2bptzq05weps4.cloudfront.net/assets/video_headers/homepage/home_video_02_2015_latest_clips-fe6f1c1e8bc77d83be417050b86f24bb.mp4" type="video/mp4">
+		<source src="//d2bptzq05weps4.cloudfront.net/video_headers/homepage/home_video_02_2015_latest_clips.webmhd.webm" type="video/webm">
+		</video>
+		<div class="video_overlay"></div>
+		<div class="jumbotron text-center">
+			<div class="row">
+				<div class="col-md-3 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+					<img alt="Actionably" class="img-responsive text-center animated fadeIn" src="modules/core/img/brand/actionably-logotype-500w.png" />
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<p class="lead">
-				Looking to hire great people? You probably already know them.
-				<br />
-				Find job candidates using your own social network.
-			</p>
-		</div>
-		<div class="row">
-			<p>
-				<a class="btn btn-primary btn-lg" href="/#!/signup">Sign Up</a>
-			</p>
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="lead">
+						Looking to hire great people? You probably already know them.
+						<br />
+						Find job candidates using your own social network.
+					</h2>
+
+					<div class="row" ng-hide="authentication.user">
+						<div class="col-md-12">
+							<p>
+								<a class="btn btn-primary btn-lg" href="/#!/signup">Sign Up Now</a>
+							</p>
+							<p>
+								Already have an account? <a href="/#!/signin">Sign In</a>.
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</div>
 		</div>
 	</div>
+
 	<div class="container">
-		<div>
-			<h2>Congrats! You've configured and run the sample application.</h2>
-			<p>MEAN.JS is a web application boilerplate, which means you should start changing everything :-)</p>
-			<p>This sample application tracks users and articles.</p>
-			<ul>
-				<li>
-					Click
-					<em>Signup</em>
-					to get started.
-				</li>
-				<li>
-					Configure your app to work with your social accounts, by editing the
-					<em>/config/env/*.js</em>
-					files.
-				</li>
-				<li>
-					Edit your users module.
-				</li>
-				<li>
-					Add new CRUD modules.
-				</li>
-				<li>
-					Have fun...
-				</li>
-			</ul>
-		</div>
-		<div class="row">
-			<div class="col-md-3">
-				<h2>
-					<strong>M</strong>ongoDB
-				</h2>
-				<p><a target="_blank" href="http://mongodb.org/">MongoDB</a> is a database. MongoDB's <a target="_blank" href="http://docs.mongodb.org/manual/">great manual</a> is the place to get started with NoSQL and MongoDB.</p>
-			</div>
-			<div class="col-md-3">
-				<h2>
-					<strong>E</strong>xpress
-				</h2>
-				<p><a target="_blank" href="http://expressjs.com/"> Express</a> is an app server. Check out <a target="_blank" href="http://expressjs.com/guide.html">The Express Guide</a> or <a target="_blank" href="http://stackoverflow.com/questions/8144214/learning-express-for-node-js">StackOverflow</a> for more info.</p>
-			</div>
-			<div class="col-md-3">
-				<h2>
-					<strong>A</strong>ngularJS
-				</h2>
-				<p>AngularJS is web app framework. <a target="_blank" href="http://angularjs.org/">Angular's website</a> offers a lot. The <a target="_blank" href="http://www.thinkster.io/">Thinkster Popular Guide</a> and <a target="_blank" href="https://egghead.io/">Egghead Videos</a> are great resources.</p>
-			</div>
-			<div class="col-md-3">
-				<h2>
-					<strong>N</strong>ode.js
-				</h2>
-				<p><a target="_blank" href="http://nodejs.org/">Node.js</a> is a web server. Node's website and this <a target="_blank" href="http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js">stackOverflow thread</a> offer excellent starting points to get to grasps with node.</p>
+
+		<div class="row" ng-show="authentication.user">
+			<div class="col-md-12">				
+				<br />
+				<p>Welcome back, <span ng-bind="authentication.user.displayName"></span>.</p>
+				<p>Here's what you can do here:
+					<ul>
+						<li><a href="#!/listings">Listings</a></li>
+						<li><a href="#!/companies">Companies</a></li>
+					</ul>
+				</p>
 			</div>
 		</div>
 
-		<div class="well">
-			<h2>MEAN.JS Documentation</h2>
-			<p>
-				Once you're familiar with the foundation technology, check out the MEAN.JS Documentation:
-				<ul>
-					<li><a target="_blank" href="http://meanjs.org/docs.html">MEAN.JS Documentation</a>
-					</li>
-					<li><a target="_blank" href="http://meanjs.org/generator.html">Yeoman Generator</a>
-					</li>
-					<li><a target="_blank" href="http://meanjs.org/modules.html">Modules</a>
-					</li>
-					<li><a target="_blank" href="http://meanjs.org/changelog.html">Changelog</a>
-					</li>
-					<li><a target="_blank" href="http://meanjs.org/community.html">Community</a>
-					</li>
-					<li><a target="_blank" href="http://blog.meanjs.org">Blog</a>
-					</li>
-				</ul>
-			</p>
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Want more information? Are you hiring now?</h2>
+				<em>Sign up for our mailing list and stay informed about our latest developments.</em>
+
+				<!-- Begin MailChimp Signup Form -->
+				<link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
+				<style type="text/css">
+					#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+					/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+					   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+				</style>
+				<div id="mc_embed_signup">
+				<form action="//actionably.us10.list-manage.com/subscribe/post?u=e79d2bd810dbb7fd00d90ee5b&amp;id=7f9142c5be" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+				    <div id="mc_embed_signup_scroll">
+				<div class="mc-field-group">
+					<label for="mce-EMAIL">Email Address
+				</label>
+					<input type="email" value="" name="EMAIL" class="required email" placeholder="Your Email Address" id="mce-EMAIL">
+				</div>
+					<div id="mce-responses" class="clear">
+						<div class="response" id="mce-error-response" style="display:none"></div>
+						<div class="response" id="mce-success-response" style="display:none"></div>
+					</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+				    <div style="position: absolute; left: -5000px;"><input type="text" name="b_e79d2bd810dbb7fd00d90ee5b_7f9142c5be" tabindex="-1" value=""></div>
+				    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+				    </div>
+				</form>
+				</div>
+				<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+				<!--End mc_embed_signup-->
+			</div>
 		</div>
-		<br>Enjoy &amp; Keep Us Updated,
-		<br>The MEAN.JS Team.
-	</div>
 </div>
 </section>
