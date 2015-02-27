@@ -91,6 +91,8 @@ exports.workerProcessDbItems = function (req) {
 		.limit(batchSize)
 		.exec()
 		.then(function (ids) {
+			l('processing ', req.body);
+			l('ids.length ', ids.length);
 			if (ids.length === 0) {
 				return {success: true};
 			}
