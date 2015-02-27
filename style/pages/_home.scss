@@ -5,7 +5,6 @@ div#homepage{
 		overflow: hidden;
 		padding: 50px 0;
 	}
-
 	.vjs-tech{
 		position: absolute;
 		top: 0;
@@ -25,7 +24,7 @@ div#homepage{
 		opacity: 0.4;
 		background-image: url('http://d2bptzq05weps4.cloudfront.net/assets/patterns/video-overlay-01e8451aa05602ad9e21b2a0f924d373.png');
 	}
-	.jumbotron {
+	.video_header_text {
 		padding: 10px;
 		background-size: cover;
 		background-position: 49%;
@@ -33,7 +32,7 @@ div#homepage{
 		color: #ffffff;
 		z-index: 1;
 	}
-	.jumbotron ul {
+	.video_header_text ul {
 		list-style-type: none;
 	}
 }
