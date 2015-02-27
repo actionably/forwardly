@@ -22,6 +22,10 @@ var EmailMetadataSchema = new Schema({
 	metadata: {
 		type: Schema.Types.Mixed,
 		required: 'Please fill meta data'
+	},
+	processed: {
+		type: Boolean,
+		default: false
 	}
 });
 

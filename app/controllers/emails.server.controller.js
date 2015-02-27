@@ -157,6 +157,9 @@ exports.workerExtractContacts = function(req) {
 	var userId = req.param('userId');
 	return EmailMetadata.findById(id).exec()
 		.then(function(email) {
+			if (email.processed) {
+				return {success:true};
+			}
 			var parsedEmails = [];
 			var toHeader = _.findWhere(email.metadata.payload.headers, {name:'To'});
 			if (toHeader) {
@@ -180,7 +183,10 @@ exports.workerExtractContacts = function(req) {
 					promises.push(Contact.findOneAndUpdate({user:userId, email:dbContact.email}, dbContact, {upsert:true}).exec());
 				}
 			});
-			return Q.all(promises);
+			return Q.all(promises).then(function() {
+				email.processed = true;
+				return email.savePromise();
+			});
 		})
 		.then(function() {
 			return {success:true};
