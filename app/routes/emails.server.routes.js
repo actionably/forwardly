@@ -6,6 +6,9 @@ module.exports = function (app) {
 	var pH = require('../utils/promiseHandler');
 	var bodyParser = require('body-parser');
 
+	app.route('/contacts')
+		.get(users.requiresLogin, pH.jsonp(emails.listContacts));
+
 	app.route('/emails/downloadAll')
 		.get(users.requiresLogin, pH.jsonp(emails.downloadAll));
 

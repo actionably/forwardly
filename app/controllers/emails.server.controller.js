@@ -22,6 +22,11 @@ var mongoose = require('mongoose'),
 	Q = require('q'),
 	_ = require('lodash');
 
+exports.listContacts = function (req) {
+	var user = req.user;
+	return Contact.find({user:user}).sort({sentCount:-1}).populate('fullContact').exec();
+};
+
 function addToContacts(contacts, parsedEmail) {
 	if (!parsedEmail.address) {
 		return;
@@ -111,14 +116,38 @@ exports.workerProcessDbItems = function (req) {
 		});
 };
 
-exports.workerAddFullContact = function(req) {
+function addHtmlToFullContact(fullContact) {
+	if (fullContact.html) {
+		return fullContact;
+	}
+	l('adding html to', fullContact);
+	var url = 'https://api.fullcontact.com/v2/person.html?email='+encodeURIComponent(fullContact.email)+'&apiKey='+config.fullContact.apiKey;
+	var args = {
+		uri: url,
+		resolveWithFullResponse: true,
+		simple:false
+	};
+	return Q.Promise(function (resolve, reject) {
+		return rp(args).then(function (response) {
+			if (response.statusCode === 200) {
+				fullContact.html = response.body;
+				return fullContact.savePromise();
+			}
+			return reject(response.body);
+		});
+	});
+}
+
+exports.workerAddFullContact = function(req, type) {
 	var id = req.param('id');
 	var userId = req.param('userId');
 	return Contact.findById(id).exec().then(function (contact) {
 		return FullContact.findOne({email:contact.email}).exec().then(function (fullContact) {
 			if (fullContact) {
 				contact.fullContact = fullContact;
-				return contact.savePromise();
+				return contact.savePromise().then(function() {
+					return addHtmlToFullContact(fullContact);
+				});
 			}
 			var url = 'https://api.fullcontact.com/v2/person.json?email='+encodeURIComponent(contact.email)+'&apiKey='+config.fullContact.apiKey;
 			var args = {
@@ -135,7 +164,9 @@ exports.workerAddFullContact = function(req) {
 						});
 						return fullContact.savePromise().then(function (savedFullContact) {
 							contact.fullContact = savedFullContact;
-							return contact.savePromise();
+							return contact.savePromise().then(function() {
+								return addHtmlToFullContact(savedFullContact);
+							});
 						});
 					} else if (response.statusCode === 404) {
 						var data = JSON.parse(response.body);

@@ -17,6 +17,9 @@ var FullContactSchema = new Schema({
 	},
 	data: {
 		type: Schema.Types.Mixed
+	},
+	html: {
+		type: String
 	}
 });
 

@@ -48,6 +48,11 @@ angular.element(document).ready(function() {
 ApplicationConfiguration.registerModule('companies');
 'use strict';
 
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('contacts');
+
+'use strict';
+
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('core');
 'use strict';
@@ -189,6 +194,40 @@ angular.module('companies').factory('Companies', ['$resource',
 		});
 	}
 ]);
+'use strict';
+
+angular.module('contacts').config(['$stateProvider',
+	function($stateProvider) {
+		$stateProvider.
+			state('listContacts', {
+				url: '/contacts',
+				templateUrl: 'modules/contacts/views/list-contacts.client.view.html',
+				controller: 'ContactsController'
+			});
+	}
+]);
+
+/* globals S3Upload */
+'use strict';
+
+// Submissions controller
+angular.module('contacts').controller('ContactsController', ['$scope', '$stateParams', '$location',
+	'Authentication', 'Contacts',
+	function($scope, $stateParams, $location, Authentication, Contacts) {
+		$scope.authentication = Authentication;
+		$scope.contacts = Contacts.query();
+	}
+]);
+
+'use strict';
+
+//Submissions service used to communicate Submissions REST endpoints
+angular.module('contacts').factory('Contacts', ['$resource',
+	function($resource) {
+		return $resource('contacts');
+	}
+]);
+
 'use strict';
 
 // Setting up route

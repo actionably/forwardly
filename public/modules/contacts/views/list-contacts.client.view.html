@@ -1,0 +1,70 @@
+<header ng-include="'/modules/core/views/header.client.view.html'"
+				class="navbar navbar-fixed-top navbar-inverse"></header>
+<section class="content container">
+	<div class="page-header">
+		<h1>Contacts</h1>
+	</div>
+	<div class="list-group">
+		<div ng-repeat="contact in contacts" class="list-group-item">
+			<h4 class="list-group-item-heading" ng-bind="contact.email"></h4>
+
+			<div>{{contact.name}}</div>
+			<div>sent count: {{contact.sentCount}}</div>
+			<div ng-show="!contact.fullContact">No full contact data</div>
+			<div ng-show="contact.fullContact">
+				<h5>Full Contact</h5>
+				<div>
+					{{contact.fullContact.data.contactInfo.fullName}}
+				</div>
+				<div ng-show="contact.fullContact.data.contactInfo.websites.length">
+					Websites: <a ng-repeat="site in contact.fullContact.data.contactInfo.websites" href="{{site.url}}">{{site.url}}</a>
+				</div>
+				<div ng-show="contact.fullContact.data.contactInfo.chats.length">
+					Chats
+					<div ng-repeat="chat in contact.fullContact.data.contactInfo.chats.length">{{chat.handle}} - {{chat.client}}</div>
+				</div>
+				<div ng-show="contact.fullContact.data.demographics">
+					<div ng-show="contact.fullContact.data.demographics.age || contact.fullContact.data.demographics.ageRange || contact.fullContact.data.demographics.gender">
+						{{contact.fullContact.data.demographics.age}}
+						{{contact.fullContact.data.demographics.ageRange}}
+						{{contact.fullContact.data.demographics.gender}}
+					</div>
+					<div ng-show="contact.fullContact.data.demographics.locationGeneral">
+						general location - {{contact.fullContact.data.demographics.locationGeneral}}
+					</div>
+					<div ng-show="contact.fullContact.data.demographics.locationDeduced">
+						deduced location - {{contact.fullContact.data.demographics.locationDeduced.deducedLocation}}
+						({{contact.fullContact.data.demographics.locationDeduced.likelihood*100}}%)
+					</div>
+				</div>
+				<div ng-show="contact.fullContact.data.photos">
+					<h6>Photos</h6>
+					<img ng-repeat="photo in contact.fullContact.data.photos" src="{{photo.url}}" />
+				</div>
+				<div ng-show="contact.fullContact.data.socialProfiles">
+					<h6>Social Profiles</h6>
+					<div ng-repeat="profile in contact.fullContact.data.socialProfiles">
+						<a href="{{profile.url}}">{{profile.typeName}}</a> {{profile.username}} {{profile.bio}}
+					</div>
+				</div>
+				<div ng-show="contact.fullContact.data.digitalFootprint">
+					<h6>Digital Footprint</h6>
+					{{contact.fullContact.data.digitalFootprint | json}}
+				</div>
+				<div ng-show="contact.fullContact.data.organizations">
+					<h6>organizations</h6>
+					<div ng-repeat="orig in contact.fullContact.data.organizations">
+						{{orig.name}}, {{orig.title}}, {{orig.startDate}} - {{orig.endDate}}
+						<span ng-show="orig.isPrimary">primary</span>
+						<span ng-show="orig.current">current</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="alert alert-warning text-center" ng-show="contacts.$resolved && !contacts.length">
+			No Contacts bummer.
+		</div>
+		<div class="alert alert-warning text-center" ng-show="!contacts.$resolved">
+			Loading contacts...
+		</div>
+</section>
