@@ -14,6 +14,9 @@ module.exports = {
 	fullContact: {
 		apiKey: process.env.FULLCONTACT_APIKEY
 	},
+	pipl: {
+		apiKey: process.env.PIPL_APIKEY
+	},
 	ironIO : {
 		token : process.env.IRON_TOKEN,
 		projectId : process.env.IRON_PROJECT_ID,

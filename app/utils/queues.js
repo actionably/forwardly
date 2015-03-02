@@ -44,7 +44,7 @@ exports.init = function(config) {
 	var imq = new iron_mq.Client();
 	configureQueue(imq, 'process_db_items_queue', config.ironIO.workerUrl+'/worker/processDbItems');
 	configureQueue(imq, 'extract_contacts_queue', config.ironIO.workerUrl+'/emails/extractContacts');
-	configureQueue(imq, 'add_fullcontact_queue', config.ironIO.workerUrl+'/emails/addFullContact');
+	configureQueue(imq, 'add_person_data_queue', config.ironIO.workerUrl+'/emails/addPersonDataSource');
 	configureQueue(imq, 'email_queue', config.ironIO.workerUrl+'/emails/downloadOne');
 	configureQueue(imq, 'email_list_queue', config.ironIO.workerUrl+'/emails/downloadList');
 };

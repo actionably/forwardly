@@ -29,7 +29,11 @@ var ContactSchema = new Schema({
 	},
 	fullContact: {
 		type: Schema.ObjectId,
-		ref: 'FullContact'
+		ref: 'PersonDataSource'
+	},
+	pipl: {
+		type: Schema.ObjectId,
+		ref: 'PersonDataSource'
 	}
 });
 

@@ -10,6 +10,64 @@
 
 			<div>{{contact.name}}</div>
 			<div>sent count: {{contact.sentCount}}</div>
+			<div ng-show="!contact.pipl">No full contact data</div>
+			<div ng-show="contact.pipl">
+				<h5>Pipl</h5>
+				<div ng-show="contact.pipl.data.person.gender">
+					{{contact.pipl.data.person.gender.content}}
+				</div>
+				<div ng-show="contact.pipl.data.person.dob">
+					{{contact.pipl.data.person.dob.display}}
+				</div>
+				<div ng-show="contact.pipl.data.person.names.length">
+					<h6>Names</h6>
+					<div ng-repeat="name in contact.pipl.data.person.names">{{name.display}}</div>
+				</div>
+				<div ng-show="contact.pipl.data.person.usernames.length">
+					<h6>Usernames</h6>
+					<div ng-repeat="username in contact.pipl.data.person.usernames">{{username.content}}</div>
+				</div>
+				<div ng-show="contact.pipl.data.person.phones.length">
+					<h6>Phones</h6>
+					<div ng-repeat="phone in contact.pipl.data.person.phones">{{phone.display}}</div>
+				</div>
+				<div ng-show="contact.pipl.data.person.addresses.length">
+					<h6>Addresses</h6>
+					<div ng-repeat="address in contact.pipl.data.person.addresses">{{address.display}}</div>
+				</div>
+				<div ng-show="contact.pipl.data.person.jobs.length">
+					<h6>Jobs</h6>
+					<div ng-repeat="job in contact.pipl.data.person.jobs">{{job.display}}</div>
+				</div>
+				<div ng-show="contact.pipl.data.person.educations.length">
+					<h6>Education</h6>
+					<div ng-repeat="item in contact.pipl.data.person.educations">{{item.display}}</div>
+				</div>
+				<div ng-show="contact.pipl.data.person.relationships.length">
+					<h6>Relationships</h6>
+					<div ng-repeat="relation in contact.pipl.data.person.relationships">
+						<span ng-repeat="name in relation.names">{{name.display}}</span> - {{relation['@type']}}
+					</div>
+				</div>
+				<div ng-show="contact.pipl.data.person.images.length">
+					<h6>Images</h6>
+					<img ng-repeat="image in contact.pipl.data.person.images" ng-src="{{image.url}}" />
+				</div>
+				<div ng-show="contact.pipl.data.person.urls.length">
+					<h6>Urls</h6>
+					<div ng-repeat="url in contact.pipl.data.person.urls">
+						<a href="{{url.url}}">{{url.url}}</a>
+					</div>
+				</div>
+				<div ng-show="contact.pipl.data.possible_persons.length">
+					{{contact.pipl.data.possible_persons.length}} possible people (not showing)
+				</div>
+				<div ng-show="contact.pipl.dataRest">
+					<h6>Other data</h6>
+					<pre>{{contact.pipl.dataRest | json}}</pre>
+				</div>
+
+			</div>
 			<div ng-show="!contact.fullContact">No full contact data</div>
 			<div ng-show="contact.fullContact">
 				<h5>Full Contact</h5>

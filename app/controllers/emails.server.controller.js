@@ -12,7 +12,7 @@
 var mongoose = require('mongoose'),
 	EmailMetadata = mongoose.model('EmailMetadata'),
 	Contact = mongoose.model('Contact'),
-	FullContact = mongoose.model('FullContact'),
+	PersonDataSource = mongoose.model('PersonDataSource'),
 	EmailParser = require('email-addresses'),
 	rp = require('request-promise'),
 	Queues = require('../utils/queues'),
@@ -24,37 +24,19 @@ var mongoose = require('mongoose'),
 
 exports.listContacts = function (req) {
 	var user = req.user;
-	return Contact.find({user:user}).sort({sentCount:-1}).populate('fullContact').exec();
+	return Contact.find({user:user}).sort({sentCount:-1}).populate('fullContact pipl').limit(200).exec();
 };
 
-function addToContacts(contacts, parsedEmail) {
-	if (!parsedEmail.address) {
-		return;
-	}
-	var contact = _.findWhere(contacts, {email:parsedEmail.address});
-	if (!contact) {
-		contact = {
-			email:parsedEmail.address,
-			name:parsedEmail.name,
-			sentCount:1
-		};
-		contacts.push(contact);
-	} else {
-		contact.sentCount++;
-		if (!contact.name) {
-			contact.name = parsedEmail.name;
-		}
-	}
-}
-
-exports.addFullContactToAll = function (req) {
+exports.addPersonDataSourceToAll = function (req) {
+	var type = req.param('type');
 	var message = {
 		userId: req.user._id,
 		query: 'user_contacts',
-		queueName: 'add_fullcontact_queue',
-		delay: 2,
-		batchSize: 5,
-		maxResults: 1000
+		queueName: 'add_person_data_queue',
+		delay: (type === 'fullContact' ? 2: 0),
+		batchSize: (type === 'fullContact' ? 5: 20),
+		maxResults: (type === 'fullContact' ? 1000: 200),
+		type: type
 	};
 	return Queues.post('process_db_items_queue', JSON.stringify(message));
 };
@@ -87,6 +69,7 @@ exports.workerProcessDbItems = function (req) {
 	var query = getQuery(req.body.query, req);
 	var maxResults = req.body.maxResults;
 	var userId = req.body.userId;
+	var type = req.body.type || '';
 	if (maxResults && skip >= maxResults) {
 		return {success:true};
 	}
@@ -106,7 +89,8 @@ exports.workerProcessDbItems = function (req) {
 					delay: delay * page,
 					body: JSON.stringify({
 						id: id._id,
-						userId: userId
+						userId: userId,
+						type: type
 					})
 				};
 			});
@@ -116,40 +100,55 @@ exports.workerProcessDbItems = function (req) {
 		});
 };
 
-function addHtmlToFullContact(fullContact) {
-	if (fullContact.html) {
-		return fullContact;
+function getUrl(contact, type) {
+	if (type === 'fullContact') {
+		return 'https://api.fullcontact.com/v2/person.json?email='+encodeURIComponent(contact.email)+'&apiKey='+config.fullContact.apiKey;
+	} else {
+		var query = {
+			emails : [{
+				address:contact.email
+			}]
+		};
+		if (contact.fullContact &&
+			contact.fullContact.data &&
+			contact.fullContact.data.contactInfo &&
+			contact.fullContact.data.contactInfo.familyName &&
+			contact.fullContact.data.contactInfo.givenName) {
+			query.name = [{
+				first : contact.fullContact.data.contactInfo.givenName,
+				last : contact.fullContact.data.contactInfo.familyName
+			}];
+		}
+		if (contact.fullContact &&
+			contact.fullContact.data &&
+			contact.fullContact.data.demographics &&
+			contact.fullContact.data.demographics.locationDeduced &&
+			contact.fullContact.data.demographics.locationDeduced.city &&
+			contact.fullContact.data.demographics.locationDeduced.state &&
+			contact.fullContact.data.demographics.locationDeduced.country &&
+			contact.fullContact.data.contactInfo.givenName) {
+			query.addresses = [{
+				city : contact.fullContact.data.demographics.locationDeduced.city.name,
+				state : contact.fullContact.data.demographics.locationDeduced.state.code,
+				country : contact.fullContact.data.demographics.locationDeduced.country.code
+			}];
+		}
+		l('query = ', query);
+		return 'http://api.pipl.com/search/v4/?person='+encodeURIComponent(JSON.stringify(query))+'&key='+config.pipl.apiKey;
 	}
-	l('adding html to', fullContact);
-	var url = 'https://api.fullcontact.com/v2/person.html?email='+encodeURIComponent(fullContact.email)+'&apiKey='+config.fullContact.apiKey;
-	var args = {
-		uri: url,
-		resolveWithFullResponse: true,
-		simple:false
-	};
-	return Q.Promise(function (resolve, reject) {
-		return rp(args).then(function (response) {
-			if (response.statusCode === 200) {
-				fullContact.html = response.body;
-				return fullContact.savePromise();
-			}
-			return reject(response.body);
-		});
-	});
 }
 
-exports.workerAddFullContact = function(req, type) {
+exports.workerAddPersonDataSource = function(req) {
 	var id = req.param('id');
 	var userId = req.param('userId');
-	return Contact.findById(id).exec().then(function (contact) {
-		return FullContact.findOne({email:contact.email}).exec().then(function (fullContact) {
-			if (fullContact) {
-				contact.fullContact = fullContact;
-				return contact.savePromise().then(function() {
-					return addHtmlToFullContact(fullContact);
-				});
+	var type = req.param('type');
+	return Contact.findById(id).populate('fullContact').exec().then(function (contact) {
+		return PersonDataSource.findOne({email:contact.email, type:type}).exec().then(function (dataSource) {
+			if (dataSource) {
+				contact[type] = dataSource;
+				return contact.savePromise();
 			}
-			var url = 'https://api.fullcontact.com/v2/person.json?email='+encodeURIComponent(contact.email)+'&apiKey='+config.fullContact.apiKey;
+			var url = getUrl(contact, type);
 			var args = {
 				uri: url,
 				resolveWithFullResponse: true,
@@ -158,15 +157,14 @@ exports.workerAddFullContact = function(req, type) {
 			return Q.Promise(function (resolve, reject) {
 				return rp(args).then(function (response) {
 					if (response.statusCode === 200) {
-						fullContact = new FullContact({
+						dataSource = new PersonDataSource({
 							email:contact.email,
+							type:type,
 							data:JSON.parse(response.body)
 						});
-						return fullContact.savePromise().then(function (savedFullContact) {
-							contact.fullContact = savedFullContact;
-							return contact.savePromise().then(function() {
-								return addHtmlToFullContact(savedFullContact);
-							});
+						return dataSource.savePromise().then(function (savedDataSource) {
+							contact[type] = savedDataSource;
+							return contact.savePromise();
 						});
 					} else if (response.statusCode === 404) {
 						var data = JSON.parse(response.body);

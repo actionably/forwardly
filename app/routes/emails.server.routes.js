@@ -15,8 +15,8 @@ module.exports = function (app) {
 	app.route('/emails/extractAllContacts')
 		.get(users.requiresLogin, pH.jsonp(emails.extractAllContacts));
 
-	app.route('/emails/addFullContactToAll')
-		.get(users.requiresLogin, pH.jsonp(emails.addFullContactToAll));
+	app.route('/emails/addPersonDataSourceToAll')
+		.get(users.requiresLogin, pH.jsonp(emails.addPersonDataSourceToAll));
 
 	// worker queue entry points.
 
@@ -27,8 +27,8 @@ module.exports = function (app) {
 	app.route('/emails/extractContacts')
 		.post(bodyParser.json({type:'text/plain'}), pH.jsonp(emails.workerExtractContacts));
 
-	app.route('/emails/addFullContact')
-		.post(bodyParser.json({type:'text/plain'}), pH.jsonp(emails.workerAddFullContact));
+	app.route('/emails/addPersonDataSource')
+		.post(bodyParser.json({type:'text/plain'}), pH.jsonp(emails.workerAddPersonDataSource));
 
 	app.route('/emails/downloadList')
 		.post(bodyParser.json({type:'text/plain'}), pH.jsonp(emails.workerDownloadList));
