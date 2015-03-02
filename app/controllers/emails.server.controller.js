@@ -33,7 +33,7 @@ exports.addPersonDataSourceToAll = function (req) {
 		userId: req.user._id,
 		query: 'user_contacts',
 		queueName: 'add_person_data_queue',
-		delay: (type === 'fullContact' ? 2: 0),
+		delay: (type === 'fullContact' ? 2: 5),
 		batchSize: (type === 'fullContact' ? 5: 20),
 		maxResults: (type === 'fullContact' ? 1000: 200),
 		type: type
