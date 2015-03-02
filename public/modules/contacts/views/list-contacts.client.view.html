@@ -4,7 +4,9 @@
 	<div class="page-header">
 		<h1>Contacts</h1>
 	</div>
-	<div class="list-group">
+	Jobs Only: <input type="checkbox" ng-model="data.jobsOnly"/> <br/>
+
+	<div class="list-group" ng-show="!data.jobsOnly">
 		<div ng-repeat="contact in contacts" class="list-group-item">
 			<h4 class="list-group-item-heading" ng-bind="contact.email"></h4>
 
@@ -13,6 +15,7 @@
 			<div ng-show="!contact.pipl">No pipl data</div>
 			<div ng-show="contact.pipl">
 				<h5>Pipl</h5>
+
 				<div ng-show="contact.pipl.data.person.gender">
 					{{contact.pipl.data.person.gender.content}}
 				</div>
@@ -21,40 +24,48 @@
 				</div>
 				<div ng-show="contact.pipl.data.person.names.length">
 					<h6>Names</h6>
+
 					<div ng-repeat="name in contact.pipl.data.person.names">{{name.display}}</div>
 				</div>
 				<div ng-show="contact.pipl.data.person.usernames.length">
 					<h6>Usernames</h6>
+
 					<div ng-repeat="username in contact.pipl.data.person.usernames">{{username.content}}</div>
 				</div>
 				<div ng-show="contact.pipl.data.person.phones.length">
 					<h6>Phones</h6>
+
 					<div ng-repeat="phone in contact.pipl.data.person.phones">{{phone.display}}</div>
 				</div>
 				<div ng-show="contact.pipl.data.person.addresses.length">
 					<h6>Addresses</h6>
+
 					<div ng-repeat="address in contact.pipl.data.person.addresses">{{address.display}}</div>
 				</div>
 				<div ng-show="contact.pipl.data.person.jobs.length">
 					<h6>Jobs</h6>
+
 					<div ng-repeat="job in contact.pipl.data.person.jobs">{{job.display}}</div>
 				</div>
 				<div ng-show="contact.pipl.data.person.educations.length">
 					<h6>Education</h6>
+
 					<div ng-repeat="item in contact.pipl.data.person.educations">{{item.display}}</div>
 				</div>
 				<div ng-show="contact.pipl.data.person.relationships.length">
 					<h6>Relationships</h6>
+
 					<div ng-repeat="relation in contact.pipl.data.person.relationships">
 						<span ng-repeat="name in relation.names">{{name.display}}</span> - {{relation['@type']}}
 					</div>
 				</div>
 				<div ng-show="contact.pipl.data.person.images.length">
 					<h6>Images</h6>
-					<img ng-repeat="image in contact.pipl.data.person.images" ng-src="{{image.url}}" />
+					<img ng-repeat="image in contact.pipl.data.person.images" ng-src="{{image.url}}"/>
 				</div>
 				<div ng-show="contact.pipl.data.person.urls.length">
 					<h6>Urls</h6>
+
 					<div ng-repeat="url in contact.pipl.data.person.urls">
 						<a href="{{url.url}}">{{url.url}}</a>
 					</div>
@@ -71,6 +82,7 @@
 			<div ng-show="!contact.fullContact">No full contact data</div>
 			<div ng-show="contact.fullContact">
 				<h5>Full Contact</h5>
+
 				<div>
 					{{contact.fullContact.data.contactInfo.fullName}}
 				</div>
@@ -79,7 +91,8 @@
 				</div>
 				<div ng-show="contact.fullContact.data.contactInfo.chats.length">
 					Chats
-					<div ng-repeat="chat in contact.fullContact.data.contactInfo.chats.length">{{chat.handle}} - {{chat.client}}</div>
+					<div ng-repeat="chat in contact.fullContact.data.contactInfo.chats.length">{{chat.handle}} - {{chat.client}}
+					</div>
 				</div>
 				<div ng-show="contact.fullContact.data.demographics">
 					<div ng-show="contact.fullContact.data.demographics.age || contact.fullContact.data.demographics.ageRange || contact.fullContact.data.demographics.gender">
@@ -97,10 +110,11 @@
 				</div>
 				<div ng-show="contact.fullContact.data.photos">
 					<h6>Photos</h6>
-					<img ng-repeat="photo in contact.fullContact.data.photos" src="{{photo.url}}" />
+					<img ng-repeat="photo in contact.fullContact.data.photos" src="{{photo.url}}"/>
 				</div>
 				<div ng-show="contact.fullContact.data.socialProfiles">
 					<h6>Social Profiles</h6>
+
 					<div ng-repeat="profile in contact.fullContact.data.socialProfiles">
 						<a href="{{profile.url}}">{{profile.typeName}}</a> {{profile.username}} {{profile.bio}}
 					</div>
@@ -111,6 +125,7 @@
 				</div>
 				<div ng-show="contact.fullContact.data.organizations">
 					<h6>organizations</h6>
+
 					<div ng-repeat="orig in contact.fullContact.data.organizations">
 						{{orig.name}}, {{orig.title}}, {{orig.startDate}} - {{orig.endDate}}
 						<span ng-show="orig.isPrimary">primary</span>
@@ -119,10 +134,27 @@
 				</div>
 			</div>
 		</div>
-		<div class="alert alert-warning text-center" ng-show="contacts.$resolved && !contacts.length">
-			No Contacts bummer.
-		</div>
-		<div class="alert alert-warning text-center" ng-show="!contacts.$resolved">
-			Loading contacts...
-		</div>
+	</div>
+	<div class="list-group" ng-show="data.jobsOnly">
+		<span ng-repeat="contact in contacts">
+			<span ng-show="contact.pipl">
+				<span ng-show="contact.pipl.data.person.jobs.length">
+					<div ng-repeat="job in contact.pipl.data.person.jobs">{{job.organization}}</div>
+				</span>
+			</span>
+			<span ng-show="contact.fullContact">
+				<span ng-show="contact.fullContact.data.organizations">
+					<div ng-repeat="orig in contact.fullContact.data.organizations">
+						{{orig.name}}
+					</div>
+				</span>
+			</span>
+		</span>
+	</div>
+	<div class="alert alert-warning text-center" ng-show="contacts.$resolved && !contacts.length">
+		No Contacts bummer.
+	</div>
+	<div class="alert alert-warning text-center" ng-show="!contacts.$resolved">
+		Loading contacts...
+	</div>
 </section>

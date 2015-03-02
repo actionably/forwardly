@@ -133,7 +133,6 @@ function getUrl(contact, type) {
 				country : contact.fullContact.data.demographics.locationDeduced.country.code
 			}];
 		}
-		l('query = ', query);
 		return 'http://api.pipl.com/search/v4/?person='+encodeURIComponent(JSON.stringify(query))+'&key='+config.pipl.apiKey;
 	}
 }

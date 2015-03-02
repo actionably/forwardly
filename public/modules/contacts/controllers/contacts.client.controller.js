@@ -5,6 +5,9 @@ angular.module('contacts').controller('ContactsController', ['$scope', '$statePa
 	'Authentication', 'Contacts',
 	function($scope, $stateParams, $location, Authentication, Contacts) {
 		$scope.authentication = Authentication;
+		$scope.data = {
+			jobsOnly: false
+		};
 		Contacts.query().$promise.then(function (contacts) {
 			_.forEach(contacts, function(contact) {
 				if (contact.pipl) {
